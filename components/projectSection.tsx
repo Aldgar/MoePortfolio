@@ -38,7 +38,7 @@ const ProjectsSection: React.FC = () => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
       viewport={{ amount: 0.5 }} 
-      className="bg-gradient-to-b from-white via-gray-50 to-gray-400 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900"
+      className="bg-gradient-to-b from-white via-gray-50 to-gray-400 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900 "
     >
       <motion.h1
         initial={{ opacity: 0, y: 30 }}
@@ -50,7 +50,7 @@ const ProjectsSection: React.FC = () => {
         Projects
       </motion.h1>
 
-      <section className="p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-15">
+      <section className="px-2 py-6 sm:p-6 md:p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects.map((project, idx) => (
           <ProjectCard key={project.title} {...project} index={idx} />
         ))}
