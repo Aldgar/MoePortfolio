@@ -17,13 +17,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   github,
   index = 0,
 }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.35, delay: index * 0.07 }}
-    viewport={{ amount: 0.1, once: true }}
-    className="bg-white dark:bg-neutral-950 rounded-3xl shadow-lg p-6 flex flex-col h-full m-5"
-  >
+ <motion.div
+  initial={{ opacity: 0, y: 30 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.18, delay: index * 0.02 }}
+  viewport={{ amount: 0.1, once: false }}
+  className="bg-white dark:bg-neutral-950 rounded-3xl shadow-lg p-3 sm:p-6 flex flex-col h-full mb-5"
+>
     <h3 className="text-2xl font-bold mb-2 text-gray-700 dark:text-gray-300">
       {title}
     </h3>

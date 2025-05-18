@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -15,6 +15,7 @@ function Navbar() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -46,17 +47,32 @@ function Navbar() {
     return () => window.removeEventListener("resize", closeMenu);
   }, []);
 
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    if (!mobileOpen) return;
+    function handleClick(e: MouseEvent) {
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(e.target as Node)
+      ) {
+        setMobileOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [mobileOpen]);
+
   return (
     <NavigationMenu
-  className={`
-    fixed top-4 left-0 right-0 z-50 bg-white/90 dark:bg-gray-950/90
-    backdrop-blur shadow-lg rounded-xl px-2 py-2 transition-all duration-300
-    ${show ? "translate-y-0" : "-translate-y-24"}
-    w-full
-    sm:w-fit sm:left-1/2 sm:right-auto sm:-translate-x-1/2 sm:mx-auto
-  `}
-  style={{ minWidth: 0, maxWidth: "100vw" }}
->
+      className={`
+        fixed top-4 left-0 right-0 z-50 bg-white/90 dark:bg-gray-950/90
+        backdrop-blur shadow-lg rounded-xl px-2 py-2 transition-all duration-300
+        ${show ? "translate-y-0" : "-translate-y-24"}
+        w-full
+        sm:w-fit sm:left-1/2 sm:right-auto sm:-translate-x-1/2 sm:mx-auto
+      `}
+      style={{ minWidth: 0, maxWidth: "100vw" }}
+    >
       {/* Hamburger for mobile */}
       <div className="flex items-center justify-between sm:hidden">
         <span className="font-bold text-lg pl-2">Menu</span>
@@ -118,7 +134,10 @@ function Navbar() {
 
       {/* Mobile Dropdown */}
       {mobileOpen && (
-        <div className="absolute left-0 top-full w-full bg-white dark:bg-gray-950 shadow-lg rounded-b-xl flex flex-col items-start gap-2 px-4 py-4 sm:hidden z-50">
+        <div
+          ref={mobileMenuRef}
+          className="absolute left-0 top-full w-full bg-white dark:bg-gray-950 shadow-lg rounded-b-xl flex flex-col items-start gap-2 px-4 py-4 sm:hidden z-50"
+        >
           <NavigationMenuItem>
             <NavigationMenuLink href="#about" className={navigationMenuTriggerStyle()} onClick={() => setMobileOpen(false)}>
               About

@@ -1,7 +1,6 @@
 "use client";
 import ProjectCard from "@/components/projectCard";
 import React from "react";
-import { motion } from "framer-motion"; 
 
 type Project = {
   title: string;
@@ -31,32 +30,17 @@ const projects: Project[] = [
   },
 ];
 
-const ProjectsSection: React.FC = () => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      viewport={{ amount: 0.5 }} 
-      className="bg-gradient-to-b from-white via-gray-50 to-gray-400 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900 "
-    >
-      <motion.h1
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.1 }}
-        viewport={{ amount: 0.5 }}
-        className="text-4xl font-bold text-primary flex justify-center pt-6"
-      >
-        Projects
-      </motion.h1>
-
-      <section className="px-2 py-6 sm:p-6 md:p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projects.map((project, idx) => (
-          <ProjectCard key={project.title} {...project} index={idx} />
-        ))}
-      </section>
-    </motion.div>
-  );
-};
+const ProjectsSection: React.FC = () => (
+  <div className="bg-gradient-to-b from-white via-gray-50 to-gray-400 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900 text-white">
+  <h1 className="text-5xl font-bold text-center mb-12 mt-8 pt-8 text-gray-600">
+    Projects
+  </h1>
+  <section className="w-full px-2 py-6 sm:px-6 md:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {projects.map((project, idx) => (
+        <ProjectCard key={project.title} {...project} index={idx} />
+      ))}
+    </section>
+    </div>
+);
 
 export default ProjectsSection;
