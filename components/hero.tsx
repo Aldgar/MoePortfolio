@@ -42,7 +42,7 @@ export default function Hero() {
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      viewport={{ amount: 0.5 }}
+      viewport={{ amount: 0.1 }}
       className="flex flex-col items-center justify-center min-h-[50vh] py-16 bg-gradient-to-b from-white via-gray-50 to-gray-400 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900"
     >
       <div className="relative mb-6">
@@ -59,7 +59,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.1 }}
-        viewport={{ amount: 0.5 }}
+        viewport={{ amount: 0.1 }}
         className="text-5xl md:text-6xl font-extrabold text-cyan-400 mb-4 text-center"
       >
         Mohamed Ibrahim
@@ -68,7 +68,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.2 }}
-        viewport={{ amount: 0.5 }}
+        viewport={{ amount: 0.1 }}
         className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 font-medium text-center"
       >
         A{" "}
@@ -82,7 +82,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.3 }}
-        viewport={{ amount: 0.5 }}
+        viewport={{ amount: 0.1 }}
         className="w-full mt-16 px-4 sm:px-8 md:px-20 lg:px-40 xl:px-80"
       >
         {/* Light mode marquee */}
