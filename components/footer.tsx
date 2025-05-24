@@ -9,7 +9,7 @@ function footer() {
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      viewport={{ amount: 0.5 }}
+      viewport={{ amount: 0.1, once: true }}
       className="w-full bg-gray-200 dark:bg-gray-900 py-6 mt-12"
     >
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-4 gap-4">

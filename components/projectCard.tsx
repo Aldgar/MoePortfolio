@@ -21,7 +21,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   initial={{ opacity: 0, y: 30 }}
   whileInView={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.18, delay: index * 0.02 }}
-  viewport={{ amount: 0.1, once: false }}
+  viewport={{ amount: 0.1, once: true }}
   className="bg-white dark:bg-neutral-950 rounded-3xl shadow-lg p-3 sm:p-6 flex flex-col h-full mb-5"
 >
     <h3 className="text-2xl font-bold mb-2 text-gray-700 dark:text-gray-300">
@@ -48,7 +48,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           rel="noopener noreferrer"
           aria-label="GitHub"
         >
-          <FaGithub className="text-3xl hover:text-gray-700 dark:text-gray-400 transition" />
+          <FaGithub className="text-gray-700 dark:text-gray-400 text-3xl hover:text-black dark:hover:text-white transition" />
         </a>
       )}
     </div>

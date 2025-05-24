@@ -38,7 +38,7 @@ function ContactForm() {
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      viewport={{ amount: 0.5 }}
+      viewport={{ amount: 0.1, once: true }}
     >
       {success && (
         <div className="bg-gradient-to-b from-white via-gray-50 to-gray-600 dark:from-gray-700 dark:via-gray-950 dark:to-gray-900 px-4 py-3 rounded mb-4 mt text-center">

@@ -56,7 +56,7 @@ export default function ExperienceData() {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        viewport={{ amount: 0.5 }}
+        viewport={{ amount: 0.1, once: true }}
         className="rounded-2xl p-8 shadow-lg bg-white dark:bg-neutral-950 mt-24 w-full max-w-7xl mx-auto px-6"
       >
         <h2 className="text-3xl font-bold text-cyan-400 mb-6">Certifications</h2>
@@ -81,7 +81,7 @@ export default function ExperienceData() {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-        viewport={{ amount: 0.5 }}
+        viewport={{ amount: 0.1, once: true }}
         className="rounded-2xl p-8 shadow-lg bg-white dark:bg-neutral-950 mt-16 w-full max-w-7xl mx-auto px-6"
       >
         <h2 className="text-3xl font-bold text-gray-700 dark:text-gray-400 mb-6">Languages</h2>
@@ -98,7 +98,7 @@ export default function ExperienceData() {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
-        viewport={{ amount: 0.5 }}
+        viewport={{ amount: 0.1, once: true }}
         className="rounded-2xl p-8 shadow-lg bg-white dark:bg-neutral-950 mt-16 w-full max-w-7xl mx-auto px-6 mb-20"
       >
         <h2 className="text-3xl font-bold mb-6 text-cyan-400">Education</h2>

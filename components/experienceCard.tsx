@@ -19,7 +19,7 @@ export default function ExperienceCard({ experience }: ExperienceCardProps) {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      viewport={{ amount: 0.5 }}
+      viewport={{ amount: 0.1, once: true }}
       className="rounded-2xl p-8 shadow-lg bg-white dark:bg-neutral-950 mt-10"
     >
       <h3 className="text-2xl font-bold text-gray-700 dark:text-gray-300">{experience.title}</h3>

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import Marquee from "react-fast-marquee";
 import {
@@ -46,14 +47,13 @@ export default function Hero() {
     >
       <div className="relative mb-6">
           <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-400 via-blue-300 to-purple-400 blur-lg opacity-60 animate-pulse" />
-            <motion.img
-              src="/MoeProfPic.jpg"
-              alt="Mohamed Ibrahim"
-              initial={{ opacity: 0, scale: 0.8, y: 40 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="relative w-45 h-45 rounded-full shadow-lg border-4 border-white dark:border-gray-900 object-cover mt-10"
-          />
+        <Image
+        src="/7B77750B-6530-46BC-B100-F76C8D06BE29_1_201_a.jpg"
+        alt="Mohamed Ibrahim"
+        width={180}
+        height={180}
+        className="relative w-45 h-45 rounded-full shadow-lg border-4 border-white dark:border-gray-900 object-cover mt-10"
+      />
       </div>
       <motion.h1
         initial={{ opacity: 0, y: 30 }}
@@ -83,7 +83,7 @@ export default function Hero() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.3 }}
         viewport={{ amount: 0.5 }}
-        className="w-full mt-40 px-80"
+        className="w-full mt-16 px-4 sm:px-8 md:px-20 lg:px-40 xl:px-80"
       >
         {/* Light mode marquee */}
         <div className="block dark:hidden overflow-hidden rounded-xl">

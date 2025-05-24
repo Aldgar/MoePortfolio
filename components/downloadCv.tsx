@@ -8,7 +8,7 @@ function downloadCv() {
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      viewport={{ amount: 0.5 }}
+      viewport={{ amount: 0.1, once: true }}
       id='downloadCv'
       className="max-w-md w-full mx-auto py-10 mt-8 bg-gradient-to-b from-white via-gray-50 to-gray-400 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900 rounded-4xl shadow-lg p-8"
     >

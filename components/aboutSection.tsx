@@ -9,7 +9,7 @@ function AboutSection() {
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      viewport={{ amount: 0.5 }}
+      viewport={{ amount: 0.1, once: true }}
       className="py-16 bg-gradient-to-b from-white via-gray-50 to-gray-400 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900"
     >
       <div className="max-w-4xl mx-auto px-8 text-center">
@@ -17,7 +17,7 @@ function AboutSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          viewport={{ amount: 0.5 }}
+          viewport={{ amount: 0.1, once: true }}
           className="text-4xl font-bold text-gray-700 dark:text-gray-400 mb-8"
         >
           About Me
@@ -26,7 +26,7 @@ function AboutSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          viewport={{ amount: 0.5 }}
+          viewport={{ amount: 0.1, once: true }}
           className="mt-4 text-2xl text-gray-700 dark:text-gray-500"
         >
           Passionate and results-driven Web Developer with hands-on experience in modern JavaScript frameworks including
@@ -37,7 +37,7 @@ function AboutSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          viewport={{ amount: 0.5 }}
+          viewport={{ amount: 0.1, once: true }}
           className="mt-4 text-2xl text-gray-700 dark:text-gray-500"
         >
           Adept at solving complex challenges through innovative,
