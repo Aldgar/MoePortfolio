@@ -52,6 +52,7 @@ function ContactForm() {
             {/* ...existing form fields... */}
             <FormField
               control={form.control}
+              rules={{ required: "Name is required" }}
               name="name"
               render={({ field }) => (
                 <FormItem>
@@ -70,6 +71,13 @@ function ContactForm() {
             <FormField
               control={form.control}
               name="email"
+              rules={{
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Invalid email address",
+                  },
+                }}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
@@ -88,6 +96,7 @@ function ContactForm() {
             <FormField
               control={form.control}
               name="subject"
+              rules={{ required: "Subject is required" }}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Subject</FormLabel>
@@ -105,6 +114,7 @@ function ContactForm() {
             <FormField
               control={form.control}
               name="message"
+                rules={{ required: "Message is required" }}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Message</FormLabel>
@@ -121,9 +131,9 @@ function ContactForm() {
             />
             <button
               type="submit"
-              className="w-full py-2 px-4 rounded-md bg-cyan-400 text-neutral-950 font-semibold transition hover:bg-cyan-600"
+              className="w-full py-2 px-4 rounded-md bg-cyan-400 text-neutral-950 font-semibold transition hover:bg-cyan-600 cursor-pointer"
             >
-              Send Message
+              Submit Message
             </button>
           </form>
         </div>
