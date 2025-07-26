@@ -73,7 +73,7 @@ export default function Hero() {
       >
         A{" "}
         <span className="text-gray-700 dark:text-gray-400 font-semibold">
-          Full Stack MERN Developer
+          Full Stack Software Developer
         </span>
       </motion.p>
 

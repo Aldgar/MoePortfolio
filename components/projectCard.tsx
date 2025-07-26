@@ -1,12 +1,14 @@
 import React from "react";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 type ProjectCardProps = {
   title: string;
   description: string;
   tech: string[];
-  github: string;
+  github?: string;
+  website?: string; // Added optional website prop
   index?: number;
 };
 
@@ -15,6 +17,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   description,
   tech,
   github,
+  website, // Optional website prop
   index = 0,
 }) => (
  <motion.div
@@ -41,6 +44,34 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       ))}
     </div>
     <div className="flex gap-4 mt-auto">
+      {/* Website link - only shows for projects that have a website */}
+      {website && title === "MonDo" ? (
+        <a
+          href={website}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Visit MonDo"
+        >
+          <Image
+            src="/MonDo-Logo.png"
+            alt="MonDo Logo"
+            width={32}
+            height={32}
+            className="hover:opacity-75 transition"
+          />
+        </a>
+      ) : website ? (
+        <a
+          href={website}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Visit Website"
+        >
+          <FaExternalLinkAlt className="text-gray-700 dark:text-gray-400 text-3xl hover:text-cyan-400 dark:hover:text-cyan-400 transition" />
+        </a>
+      ) : null}
+      
+      {/* GitHub link - only show if github prop exists */}
       {github && (
         <a
           href={github}

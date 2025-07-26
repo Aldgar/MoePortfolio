@@ -6,7 +6,8 @@ type Project = {
   title: string;
   description: string;
   tech: string[];
-  github: string;
+  github?: string;
+  website?: string;
 };
 
 const projects: Project[] = [
@@ -14,7 +15,7 @@ const projects: Project[] = [
     title: "MonDo",
     description: "A modern, responsive social media platform built with TypeScriopt, Next.js, Tailwind CSS. It features a sleek design, user authentication, real-time updates using WebSockets, Clerk for managing the login and users, and a RESTful API for data management. and MongoDB for data storage.",
     tech: ["Next.js", "Tailwind CSS", "React", "Node.js", "MongoDB", "NextAuth.js", "Clerk", "ShadCn"],
-    github: "https://github.com/Aldgar/MonDo",
+    website: "https://mon-do.vercel.app",
   },
   {
     title: "Users Dashboard",
