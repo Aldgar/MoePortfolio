@@ -222,12 +222,9 @@ export default function SmartPortfolioAdapter({
   const handleSuggestionClick = (suggestion: string) => {
     console.log("🔥 AI Banner Button clicked:", suggestion);
 
-    // Map suggestions to section IDs (exact matches from page.tsx)
+    // Map suggestions to section IDs (general fallback mapping)
     const sectionMap: { [key: string]: string } = {
       About: "about",
-      View: "projects", // "View Projects"
-      Explore: "projects", // "Explore Portfolio"
-      Projects: "projects", // Direct match
       Contact: "contact",
       Download: "downloadcv",
       Skills: "skills",
@@ -235,14 +232,43 @@ export default function SmartPortfolioAdapter({
       Resume: "downloadcv",
       CV: "downloadcv",
       Mohamed: "about", // "About Mohamed"
+      Projects: "projects", // General projects reference
     };
 
-    // Find the matching section
+    // Find the matching section with priority for business inquiries
     let targetSection = "";
-    for (const [key, value] of Object.entries(sectionMap)) {
-      if (suggestion.toLowerCase().includes(key.toLowerCase())) {
-        targetSection = value;
+    
+    // First check for business/contact-related suggestions (higher priority)
+    const businessKeywords = ["quote", "consultation", "consult", "hire", "schedule", "get project"];
+    const portfolioKeywords = ["view", "explore", "portfolio"];
+    
+    const suggestionLower = suggestion.toLowerCase();
+    
+    // Check business keywords first (these should go to contact)
+    for (const keyword of businessKeywords) {
+      if (suggestionLower.includes(keyword)) {
+        targetSection = "contact";
         break;
+      }
+    }
+    
+    // If no business match, check portfolio keywords
+    if (!targetSection) {
+      for (const keyword of portfolioKeywords) {
+        if (suggestionLower.includes(keyword)) {
+          targetSection = "projects";
+          break;
+        }
+      }
+    }
+    
+    // If still no match, use the general mapping
+    if (!targetSection) {
+      for (const [key, value] of Object.entries(sectionMap)) {
+        if (suggestionLower.includes(key.toLowerCase())) {
+          targetSection = value;
+          break;
+        }
       }
     }
 
