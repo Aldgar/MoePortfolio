@@ -15,21 +15,24 @@ const MOHAMED_DATA = {
   personal: {
     name: "Mohamed Ibrahim",
     title: "Full-Stack Developer",
-    location: "Portugal",
-    email: "mohamed@example.com", // Replace with real email
-    linkedin: "https://linkedin.com/in/your-profile",
-    github: "https://github.com/MohamedIbrahem4",
+    location: "Cairo, Egypt",
+    email: "mo@mohamedibrahim.net",
+    whatsapp: "+20 115 550 1013",
+    linkedin: "https://www.linkedin.com/in/mohamed-ibrahim-539308180/",
+    github: "https://github.com/Aldgar",
+    portfolioWebsite: "Available on this website's contact section",
   },
   experience: {
     current: {
-      company: "Teleperformance Portugal",
       role: "Full-Stack Developer",
-      duration: "2023 - Present",
+      duration: "3+ years of experience",
+      focus: "Building scalable web applications and modern software solutions",
       responsibilities: [
         "Developing scalable web applications using React and Next.js",
-        "Building robust backend APIs with NestJS and TypeScript",
-        "Optimizing database performance and implementing caching strategies",
-        "Leading code reviews and mentoring junior developers",
+        "Building robust backend APIs with NestJS and Node.js",
+        "Working with databases like MongoDB and PostgreSQL",
+        "Implementing modern UI/UX with TypeScript and Tailwind CSS",
+        "Creating full-stack solutions from concept to deployment",
       ],
     },
     skills: {
@@ -48,94 +51,218 @@ const MOHAMED_DATA = {
   projects: [
     {
       name: "NilToum Connect",
-      type: "Job Platform",
+      type: "Job Platform (in development)",
       description:
-        "A comprehensive job matching platform connecting employers with candidates",
+        "A comprehensive job matching platform bridging the employment gap by offering a localized, community-driven hiring solution for regions often left out of global job networks",
       technologies: [
         "Next.js",
         "NestJS",
-        "PostgreSQL",
+        "MongoDB",
         "TypeScript",
         "Tailwind CSS",
+        "Prisma",
+        "Supabase",
+        "Docker",
+        "Turborepo",
+        "NextAuth.js",
+        "Jest",
       ],
       features: [
-        "Advanced job search and filtering",
-        "Real-time messaging system",
-        "AI-powered job matching",
-        "Comprehensive user profiles",
-        "Payment integration for premium features",
+        "Job board with skill-based profile matching",
+        "User authentication with Google login",
+        "Application tracking for candidates and recruiters",
+        "Mobile-first, low-bandwidth-optimized UI",
+        "Component-driven development with design system foundation",
+        "CI/CD pipeline with GitHub Actions",
       ],
       challenges: [
-        "Implementing real-time notifications",
-        "Optimizing search performance with large datasets",
-        "Building secure authentication system",
+        "Building for underserved regions with slow networks",
+        "Implementing microservices-inspired modular structure",
+        "Balancing performance, time-to-market, and infrastructure costs",
+        "Creating scalable architecture for future growth",
       ],
       architecture:
-        "Microservices with API Gateway, separate frontend and backend, Redis for caching",
+        "Turborepo monorepo with Next.js frontend and NestJS backend, MongoDB with Prisma, containerized with Docker",
+      github: "https://github.com/Aldgar/NilToum",
     },
     {
-      name: "E-Commerce Platform",
-      type: "Web Application",
-      description: "Modern e-commerce solution with inventory management",
-      technologies: ["React", "Node.js", "MongoDB", "Stripe"],
+      name: "MonDo",
+      type: "Social Media Platform",
+      description:
+        "A modern, responsive social media platform with real-time features and sleek design",
+      technologies: [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "MongoDB",
+        "Clerk",
+        "ShadCn",
+        "WebSockets",
+      ],
       features: [
-        "Product catalog",
-        "Shopping cart",
-        "Payment processing",
-        "Admin dashboard",
+        "User authentication with Clerk",
+        "Real-time updates using WebSockets",
+        "RESTful API for data management",
+        "Responsive design",
+        "Modern UI with ShadCn components",
       ],
       challenges: [
-        "Payment security",
-        "Inventory synchronization",
+        "Implementing real-time features",
+        "User management and authentication",
+        "Responsive design across devices",
+      ],
+      website: "https://mon-do.vercel.app",
+    },
+    {
+      name: "Users Dashboard",
+      type: "Management System",
+      description:
+        "A user management dashboard with secure authentication and scalable architecture",
+      technologies: [
+        "React",
+        "Express.js",
+        "MongoDB",
+        "Tailwind CSS",
+        "Zod",
+        "Supabase",
+        "Docker",
+      ],
+      features: [
+        "Secure user authentication",
+        "RESTful API for data handling",
+        "Performance-optimized design",
+        "Containerized deployment",
+      ],
+      challenges: [
+        "Ensuring security and scalability",
+        "Efficient data handling",
         "Performance optimization",
+      ],
+      github: "https://github.com/Aldgar/Express.js-assesment",
+    },
+    {
+      name: "Managers Dashboard",
+      type: "Full-Stack Dashboard",
+      description:
+        "A comprehensive dashboard for managing managers with Next.js and NestJS integration",
+      technologies: [
+        "Next.js",
+        "NestJS",
+        "MongoDB",
+        "TypeScript",
+        "Tailwind CSS",
+        "NextAuth.js",
+        "Docker",
+        "Supabase",
+      ],
+      features: [
+        "Manager authentication using NextAuth.js",
+        "Full-stack integration between Next.js and NestJS",
+        "RESTful API with NestJS",
+        "Containerized deployment",
+      ],
+      challenges: [
+        "Seamless frontend-backend integration",
+        "Secure authentication implementation",
+        "Scalable architecture design",
+      ],
+      github: "https://github.com/Aldgar/Project-Managers-Backend-With-Nestjs",
+    },
+    {
+      name: "AI-Powered Portfolio",
+      type: "Personal Website",
+      description:
+        "This intelligent portfolio website with contextual AI assistant and admin functionality",
+      technologies: ["Next.js", "TypeScript", "OpenAI API", "Tailwind CSS"],
+      features: [
+        "Contextual AI chat assistant with conversation memory",
+        "Admin dashboard with authentication",
+        "Responsive design",
+        "Contact form integration",
+        "Professional portfolio showcase",
+      ],
+      challenges: [
+        "Implementing conversation memory for AI",
+        "Creating contextual AI responses",
+        "Building secure admin authentication",
+        "Optimizing AI performance and response quality",
       ],
     },
   ],
 };
 
 export async function POST(request: NextRequest) {
+  let message = "";
+  let conversationHistory: Array<{ role: string; content: string }> = [];
+  let responseType = "GENERAL";
+
   try {
-    const { message, action, visitorIntent } = await request.json();
+    const requestData = await request.json();
+    message = requestData.message;
+    const action = requestData.action;
+    const visitorIntent = requestData.visitorIntent;
+    conversationHistory = requestData.conversationHistory || [];
+
+    // Determine what type of response to generate
+    responseType = determineResponseType(message, action);
 
     // If OpenAI is not available, return fallback response
     if (!openai) {
+      const fallbackResponse = generateIntelligentFallback(
+        message,
+        conversationHistory
+      );
       return NextResponse.json({
-        response: getFallbackResponse(message, action),
+        response: fallbackResponse,
         responseType: "FALLBACK",
-        actionSuggestions: [
-          "View Portfolio",
-          "Contact Mohamed",
-          "Download Resume",
-          "See Projects",
-        ],
+        actionSuggestions: generateContextualSuggestions(
+          message,
+          fallbackResponse,
+          conversationHistory
+        ),
       });
     }
-
-    // Determine what type of response to generate
-    const responseType = determineResponseType(message, action);
 
     let systemPrompt = "";
 
     switch (responseType) {
       case "RESUME_GENERATION":
-        systemPrompt = createResumePrompt(visitorIntent);
+        systemPrompt = createResumePrompt(visitorIntent, conversationHistory);
         break;
       case "PROJECT_DEMO":
-        systemPrompt = createProjectDemoPrompt();
+        systemPrompt = createProjectDemoPrompt(conversationHistory);
         break;
       case "TECHNICAL_INTERVIEW":
-        systemPrompt = createInterviewPrompt();
+        systemPrompt = createInterviewPrompt(conversationHistory);
         break;
       default:
-        systemPrompt = createGeneralPrompt();
+        systemPrompt = createGeneralPrompt(conversationHistory);
     }
+
+    // Build conversation messages with history
+    const conversationMessages: Array<{
+      role: "system" | "user" | "assistant";
+      content: string;
+    }> = [{ role: "system", content: systemPrompt }];
+
+    // Add recent conversation history for context
+    if (conversationHistory.length > 0) {
+      conversationHistory.forEach((msg: { role: string; content: string }) => {
+        if (msg.role === "user" || msg.role === "assistant") {
+          conversationMessages.push({
+            role: msg.role as "user" | "assistant",
+            content: msg.content,
+          });
+        }
+      });
+    }
+
+    // Add current message
+    conversationMessages.push({ role: "user", content: message });
 
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: message },
-      ],
+      messages: conversationMessages,
       max_tokens: 500,
       temperature: 0.7,
     });
@@ -145,49 +272,31 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       response,
       responseType,
-      actionSuggestions: generateActionSuggestions(responseType),
+      actionSuggestions: generateContextualSuggestions(
+        message,
+        response,
+        conversationHistory
+      ),
     });
   } catch (error: unknown) {
     console.error("AI Error:", error);
-    return NextResponse.json(
-      { error: "AI service temporarily unavailable" },
-      { status: 500 }
+
+    // Provide contextual fallback responses based on conversation history
+    const fallbackResponse = generateIntelligentFallback(
+      message,
+      conversationHistory
     );
+
+    return NextResponse.json({
+      response: fallbackResponse,
+      responseType,
+      actionSuggestions: generateContextualSuggestions(
+        message,
+        fallbackResponse,
+        conversationHistory
+      ),
+    });
   }
-}
-
-function getFallbackResponse(message: string, action?: string): string {
-  const lowerMessage = message.toLowerCase();
-
-  // Resume/CV requests
-  if (
-    lowerMessage.includes("resume") ||
-    lowerMessage.includes("cv") ||
-    action === "RESUME_GENERATION"
-  ) {
-    return `Hi! I'm Mohamed Ibrahim, a Full-Stack Developer with extensive experience in React, Next.js, NestJS, and modern web technologies. I'm currently working at Teleperformance Portugal, building scalable applications and leading development teams. I'd be happy to share my detailed resume with you - would you like me to generate a custom version highlighting specific skills relevant to your needs?`;
-  }
-
-  // Project demonstration requests
-  if (
-    lowerMessage.includes("project") ||
-    lowerMessage.includes("demo") ||
-    action === "PROJECT_DEMO"
-  ) {
-    return `I'd love to show you my projects! My flagship project is NilToum Connect, a comprehensive job platform built with Next.js, NestJS, and PostgreSQL. It features real-time messaging, AI-powered job matching, and advanced search capabilities. I also have an e-commerce platform with inventory management and payment processing. Which project would you like to explore in detail?`;
-  }
-
-  // Technical questions
-  if (
-    lowerMessage.includes("technical") ||
-    lowerMessage.includes("code") ||
-    action === "TECHNICAL_INTERVIEW"
-  ) {
-    return `Great technical question! I have hands-on experience with modern full-stack architecture, from React/Next.js frontends to NestJS/Node.js backends, working with PostgreSQL, MongoDB, and Redis. I focus on scalable, maintainable code and have experience with microservices, API design, and performance optimization. What specific technical area would you like to discuss?`;
-  }
-
-  // General greeting or questions
-  return `Hello! I'm Mohamed Ibrahim's AI assistant. I can help you learn about Mohamed's background as a Full-Stack Developer, his projects, technical skills, and experience. Mohamed specializes in React, Next.js, NestJS, TypeScript, and building scalable web applications. What would you like to know about his work?`;
 }
 
 function determineResponseType(message: string, action?: string): string {
@@ -229,7 +338,15 @@ function determineResponseType(message: string, action?: string): string {
   return "GENERAL";
 }
 
-function createResumePrompt(visitorIntent?: string): string {
+function createResumePrompt(
+  visitorIntent?: string,
+  conversationHistory: Array<{ role: string; content: string }> = []
+): string {
+  const conversationContext =
+    conversationHistory.length > 0
+      ? `\n\nConversation History:\n${conversationHistory.map((msg) => `${msg.role}: ${msg.content}`).join("\n")}`
+      : "";
+
   const intentFocus =
     visitorIntent === "RECRUITER"
       ? "technical skills and employment readiness"
@@ -241,92 +358,291 @@ function createResumePrompt(visitorIntent?: string): string {
 
 MOHAMED'S DATA: ${JSON.stringify(MOHAMED_DATA, null, 2)}
 
-When someone asks for a resume or CV, provide a structured response focusing on ${intentFocus}.
+${conversationContext}
 
-Format your response as:
-1. Brief introduction
-2. Key highlights relevant to the visitor
-3. Offer to generate a custom PDF resume
-4. Ask what specific aspects they'd like emphasized
+IMPORTANT: For PDF resume requests, say: "I can connect you with Mohamed for a personalized resume. Contact mo@mohamedibrahim.net or WhatsApp +20 115 550 1013 for a custom PDF resume tailored to your specific needs."
 
-Be professional, confident, and highlight Mohamed's unique strengths.`;
+Focus on ${intentFocus} while being contextual to previous conversation.
+
+Be professional, confident, and reference previous topics when relevant.`;
 }
 
-function createProjectDemoPrompt(): string {
+function createProjectDemoPrompt(
+  conversationHistory: Array<{ role: string; content: string }> = []
+): string {
+  const conversationContext =
+    conversationHistory.length > 0
+      ? `\n\nConversation History:\n${conversationHistory.map((msg) => `${msg.role}: ${msg.content}`).join("\n")}`
+      : "";
+
   return `You are Mohamed Ibrahim's AI assistant specializing in interactive project demonstrations.
 
 MOHAMED'S DATA: ${JSON.stringify(MOHAMED_DATA, null, 2)}
 
-When someone asks about projects:
-1. Enthusiastically introduce the relevant project
-2. Highlight key technical achievements
-3. Explain the business impact
-4. Offer to show specific features or code examples
-5. Use action words like "Let me show you..." or "I'll demonstrate..."
+${conversationContext}
 
-Always offer to navigate them to specific sections of the portfolio.
-Be engaging and make them excited about the technical work.`;
+When discussing projects, be contextual to previous conversation:
+1. Reference previous topics when relevant
+2. Build on what was already discussed
+3. Highlight technical achievements contextually
+4. Explain business impact with conversation awareness
+5. Offer specific features based on conversation flow
+
+Always be engaging and reference the conversation history naturally.`;
 }
 
-function createInterviewPrompt(): string {
+function createInterviewPrompt(
+  conversationHistory: Array<{ role: string; content: string }> = []
+): string {
+  const conversationContext =
+    conversationHistory.length > 0
+      ? `\n\nConversation History:\n${conversationHistory.map((msg) => `${msg.role}: ${msg.content}`).join("\n")}`
+      : "";
+
   return `You are Mohamed Ibrahim in a technical interview setting.
 
 MOHAMED'S DATA: ${JSON.stringify(MOHAMED_DATA, null, 2)}
 
-Respond as Mohamed would in a technical interview:
-1. Answer questions with specific examples from real projects
-2. Explain your thought process and decision-making
-3. Mention challenges you've overcome
-4. Show enthusiasm for problem-solving
-5. Reference actual code architecture and solutions
+${conversationContext}
 
-Be confident, detailed, and demonstrate deep technical knowledge.
-Always relate answers back to real project experience.`;
+Respond as Mohamed would in a technical interview, being contextual:
+1. Reference previous conversation when relevant
+2. Answer with specific examples from real projects
+3. Build on technical topics already discussed
+4. Show enthusiasm for problem-solving
+5. Connect current responses to conversation history
+
+Be confident, detailed, and maintain conversation continuity.`;
 }
 
-function createGeneralPrompt(): string {
-  return `You are Mohamed Ibrahim's AI assistant with comprehensive knowledge about his portfolio.
+function createGeneralPrompt(
+  conversationHistory: Array<{ role: string; content: string }> = []
+): string {
+  const conversationContext =
+    conversationHistory.length > 0
+      ? `\n\nConversation History:\n${conversationHistory.map((msg) => `${msg.role}: ${msg.content}`).join("\n")}`
+      : "";
+
+  const lastUserMessage =
+    conversationHistory.filter((msg) => msg.role === "user").slice(-1)[0]
+      ?.content || "";
+
+  return `You are Mohamed Ibrahim's intelligent AI assistant. You provide contextual, personalized responses based on conversation history.
 
 MOHAMED'S DATA: ${JSON.stringify(MOHAMED_DATA, null, 2)}
 
-Provide helpful, professional responses about Mohamed's:
-- Experience and background
-- Technical skills and projects  
-- Availability and contact information
-- Career achievements
+${conversationContext}
 
-Keep responses informative but concise. Always offer to provide more specific information or demonstrate capabilities.`;
+IMPORTANT INSTRUCTIONS:
+1. ALWAYS reference previous conversation when relevant
+2. For resume/PDF requests: Say "I can help you contact Mohamed for a personalized resume. Here's his contact info: mo@mohamedibrahim.net or WhatsApp +20 115 550 1013"
+3. Be contextual - build on previous topics discussed
+4. Provide dynamic responses that feel like a real conversation
+5. Never use generic pre-written answers
+
+Current context: ${lastUserMessage ? `Responding to: "${lastUserMessage}"` : "Starting conversation"}
+
+Respond as Mohamed's intelligent assistant with full conversation awareness.`;
 }
 
-function generateActionSuggestions(responseType: string): string[] {
-  switch (responseType) {
-    case "RESUME_GENERATION":
-      return [
-        "Generate Custom PDF Resume",
-        "View Technical Skills",
-        "See Work Experience",
-        "Download Portfolio",
-      ];
-    case "PROJECT_DEMO":
-      return [
-        "Show NilToum Connect Demo",
-        "View Project Architecture",
-        "See Code Examples",
-        "Explore Live Projects",
-      ];
-    case "TECHNICAL_INTERVIEW":
-      return [
-        "Ask Another Technical Question",
-        "See Code Implementation",
-        "Discuss Architecture Decisions",
-        "View Problem-Solving Examples",
-      ];
-    default:
-      return [
-        "Learn About Projects",
-        "View Resume",
-        "Ask Technical Questions",
-        "Contact Mohamed",
-      ];
+function generateContextualSuggestions(
+  userMessage: string,
+  aiResponse: string | null,
+  conversationHistory: Array<{ role: string; content: string }> = []
+): string[] {
+  const message = userMessage.toLowerCase();
+  const response = (aiResponse || "").toLowerCase();
+
+  // Analyze conversation context
+  const hasAskedAboutProjects = conversationHistory.some(
+    (msg) =>
+      msg.content.toLowerCase().includes("project") ||
+      msg.content.toLowerCase().includes("portfolio")
+  );
+  const hasAskedAboutSkills = conversationHistory.some(
+    (msg) =>
+      msg.content.toLowerCase().includes("skill") ||
+      msg.content.toLowerCase().includes("technology")
+  );
+  const hasAskedAboutExperience = conversationHistory.some(
+    (msg) =>
+      msg.content.toLowerCase().includes("experience") ||
+      msg.content.toLowerCase().includes("work")
+  );
+  const hasAskedAboutContact = conversationHistory.some(
+    (msg) =>
+      msg.content.toLowerCase().includes("contact") ||
+      msg.content.toLowerCase().includes("hire")
+  );
+
+  // Context-aware suggestions based on current conversation
+  if (message.includes("project") || response.includes("project")) {
+    return [
+      "Tell me more about NilToum Connect",
+      "What technologies did you use?",
+      "Can I see the GitHub repository?",
+      "What challenges did you face?",
+      "Show me another project",
+    ];
   }
+
+  if (
+    message.includes("skill") ||
+    message.includes("technology") ||
+    response.includes("skill")
+  ) {
+    return [
+      "How long have you been using React?",
+      "Tell me about your backend expertise",
+      "What's your experience with databases?",
+      "Do you know cloud technologies?",
+      "What about mobile development?",
+    ];
+  }
+
+  if (
+    message.includes("experience") ||
+    message.includes("work") ||
+    response.includes("experience")
+  ) {
+    return [
+      "What do you do at Teleperformance?",
+      "Tell me about your career progression",
+      "What's your biggest achievement?",
+      "Do you lead a team?",
+      "What's your typical workday like?",
+    ];
+  }
+
+  if (
+    message.includes("hire") ||
+    message.includes("contact") ||
+    message.includes("resume") ||
+    response.includes("contact")
+  ) {
+    return [
+      "Generate a custom PDF resume",
+      "What's your availability?",
+      "What are your salary expectations?",
+      "Can we schedule a call?",
+      "Send me your portfolio link",
+    ];
+  }
+
+  if (
+    message.includes("resume") ||
+    message.includes("cv") ||
+    response.includes("resume")
+  ) {
+    return [
+      "Create PDF resume for frontend role",
+      "Generate backend developer resume",
+      "Make full-stack resume",
+      "Customize for startup position",
+      "Download complete portfolio",
+    ];
+  }
+
+  // Default suggestions based on what hasn't been asked yet
+  const suggestions = [];
+
+  if (!hasAskedAboutProjects) suggestions.push("Show me your best projects");
+  if (!hasAskedAboutSkills) suggestions.push("What are your technical skills?");
+  if (!hasAskedAboutExperience)
+    suggestions.push("Tell me about your experience");
+  if (!hasAskedAboutContact) suggestions.push("How can I hire you?");
+
+  // Add some follow-up questions based on the response
+  if (response.includes("react") || response.includes("next.js")) {
+    suggestions.push("What's your React expertise level?");
+  }
+  if (response.includes("node") || response.includes("backend")) {
+    suggestions.push("Tell me about your backend work");
+  }
+
+  // Ensure we have at least 4 suggestions
+  while (suggestions.length < 4) {
+    const additional = [
+      "What makes you unique as a developer?",
+      "Tell me about your problem-solving approach",
+      "What's your ideal work environment?",
+      "Show me code examples",
+      "What are you currently learning?",
+    ];
+
+    for (const suggestion of additional) {
+      if (!suggestions.includes(suggestion) && suggestions.length < 4) {
+        suggestions.push(suggestion);
+      }
+    }
+    break;
+  }
+
+  return suggestions.slice(0, 4);
+}
+
+function generateIntelligentFallback(
+  userMessage: string,
+  conversationHistory: Array<{ role: string; content: string }> = []
+): string {
+  const message = userMessage.toLowerCase();
+
+  // Contextual responses based on conversation history
+  const hasAskedAboutProjects = conversationHistory.some(
+    (msg) =>
+      msg.content.toLowerCase().includes("project") ||
+      msg.content.toLowerCase().includes("portfolio")
+  );
+
+  const hasAskedAboutContact = conversationHistory.some(
+    (msg) =>
+      msg.content.toLowerCase().includes("contact") ||
+      msg.content.toLowerCase().includes("email")
+  );
+
+  // PDF Resume requests
+  if (
+    message.includes("resume") ||
+    message.includes("pdf") ||
+    message.includes("cv")
+  ) {
+    return "I'd be happy to help you get Mohamed's resume! For a personalized PDF resume tailored to your specific needs, please contact Mohamed directly at mo@mohamedibrahim.net or WhatsApp +20 115 550 1013. He can create a custom resume highlighting the most relevant experience for your requirements.";
+  }
+
+  // Project inquiries
+  if (
+    message.includes("project") ||
+    message.includes("work") ||
+    message.includes("portfolio")
+  ) {
+    if (hasAskedAboutProjects) {
+      return "Since you're interested in Mohamed's projects, I'd recommend checking out NilToum Connect - his most comprehensive full-stack application. It's a job platform built with Next.js, NestJS, and PostgreSQL. Would you like to know more about the technical implementation or see other projects?";
+    }
+    return "Mohamed has several impressive projects! His flagship project is NilToum Connect, a comprehensive job matching platform. He's also built AI-powered solutions and modern web applications. What type of project interests you most?";
+  }
+
+  // Contact requests
+  if (
+    message.includes("contact") ||
+    message.includes("email") ||
+    message.includes("reach")
+  ) {
+    return `${hasAskedAboutContact ? "As mentioned earlier, here's" : "Here's"} Mohamed's contact information:\n📧 Email: mo@mohamedibrahim.net\n📱 WhatsApp: +20 115 550 1013\n\nHe's always open to discussing new opportunities and collaborations!`;
+  }
+
+  // Skills inquiries
+  if (
+    message.includes("skill") ||
+    message.includes("tech") ||
+    message.includes("experience")
+  ) {
+    return "Mohamed is a full-stack developer with 3+ years of experience. His technical stack includes React, Next.js, Node.js, TypeScript, Python, and AWS. He specializes in building scalable web applications and has experience with both frontend and backend development. What specific technology would you like to know more about?";
+  }
+
+  // Default contextual response
+  if (conversationHistory.length > 0) {
+    return `I understand you're asking about "${userMessage}". While I'm temporarily unable to provide my full AI capabilities, I can still help you learn about Mohamed's professional background. Please feel free to contact him directly at mo@mohamedibrahim.net for detailed discussions!`;
+  }
+
+  return "Hello! I'm Mohamed's AI assistant. While I'm temporarily experiencing some technical issues, I can still help you learn about his work. Mohamed is a full-stack developer specializing in React, Next.js, and modern web technologies. For detailed conversations, please reach out to him at mo@mohamedibrahim.net!";
 }

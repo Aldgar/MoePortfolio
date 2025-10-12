@@ -237,13 +237,20 @@ export default function SmartPortfolioAdapter({
 
     // Find the matching section with priority for business inquiries
     let targetSection = "";
-    
+
     // First check for business/contact-related suggestions (higher priority)
-    const businessKeywords = ["quote", "consultation", "consult", "hire", "schedule", "get project"];
+    const businessKeywords = [
+      "quote",
+      "consultation",
+      "consult",
+      "hire",
+      "schedule",
+      "get project",
+    ];
     const portfolioKeywords = ["view", "explore", "portfolio"];
-    
+
     const suggestionLower = suggestion.toLowerCase();
-    
+
     // Check business keywords first (these should go to contact)
     for (const keyword of businessKeywords) {
       if (suggestionLower.includes(keyword)) {
@@ -251,7 +258,7 @@ export default function SmartPortfolioAdapter({
         break;
       }
     }
-    
+
     // If no business match, check portfolio keywords
     if (!targetSection) {
       for (const keyword of portfolioKeywords) {
@@ -261,7 +268,7 @@ export default function SmartPortfolioAdapter({
         }
       }
     }
-    
+
     // If still no match, use the general mapping
     if (!targetSection) {
       for (const [key, value] of Object.entries(sectionMap)) {
