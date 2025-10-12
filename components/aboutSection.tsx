@@ -29,7 +29,7 @@ function AboutSection() {
           viewport={{ amount: 0.1, once: true }}
           className="mt-4 text-2xl text-gray-700 dark:text-gray-500"
         >
-          Passionate and results-driven Web Developer with hands-on experience in modern JavaScript frameworks including
+          <span className="font-semibold text-gray-700 dark:text-gray-400">Full Stack</span> Software Engineer with <span className="font-semibold text-gray-700 dark:text-gray-400"> 1+ years</span> of experience designing, building, and deploying scalable applications using
           <span className="font-semibold text-gray-700 dark:text-gray-400 "> React, Next.js,</span>, <span className="font-semibold text-gray-700 dark:text-gray-400">NestJS</span> and <span className="font-semibold text-gray-700 dark:text-gray-400">Express.JS</span>. Specialized in building responsive, high-performance web applications with clean,
           maintainable code and a strong focus on user experience.
         </motion.p>
@@ -40,10 +40,7 @@ function AboutSection() {
           viewport={{ amount: 0.1, once: true }}
           className="mt-4 text-2xl text-gray-700 dark:text-gray-500"
         >
-          Adept at solving complex challenges through innovative,
-          scalable solutions in collaborative, fast-paced environments. Committed to continuous learning and staying current
-          with industry trends to deliver cutting-edge digital experiences. Eager to contribute skills and grow within a dynamic
-          development team.
+          Skilled in developing <span className="font-semibold text-gray-700 dark:text-gray-400">RESTful</span> and <span className="font-semibold text-gray-700 dark:text-gray-400">GraphQL APIs</span>, implementing authentication flows <span className="font-semibold text-gray-700 dark:text-gray-400">(OAuth2, JWT, Keycloak/NextAuth)</span>, and containerizing applications with <span className="font-semibold text-gray-700 dark:text-gray-400">Docker</span>. Experienced in real-time systems, developing microservices architecture, and cloud integration (AWS basics). Passionate about delivering high-performance, user-focused applications and collaborating in Agile environments.
         </motion.p>
       </div>
     </motion.section>

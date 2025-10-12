@@ -71,9 +71,9 @@ export default function Hero() {
         viewport={{ amount: 0.1 }}
         className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 font-medium text-center"
       >
-        A{" "}
+        {" "}
         <span className="text-gray-700 dark:text-gray-400 font-semibold">
-          Full Stack Software Developer
+          Full Stack Software Engineer
         </span>
       </motion.p>
 

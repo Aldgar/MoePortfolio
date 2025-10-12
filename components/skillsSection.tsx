@@ -1,5 +1,5 @@
 "use client";
-import { SiJavascript, SiTypescript, SiReact, SiNextdotjs, SiTailwindcss, SiBootstrap, SiNodedotjs, SiMongodb, SiGraphql, SiExpress, SiNestjs, SiJest, SiDocker, SiSupabase, SiPowers, SiGooglecloud } from "react-icons/si";
+import { SiJavascript, SiTypescript, SiReact, SiNextdotjs, SiTailwindcss, SiBootstrap, SiNodedotjs, SiMongodb, SiGraphql, SiExpress, SiNestjs, SiJest, SiDocker, SiSupabase, SiPowers, SiGooglecloud, SiRedux, SiPrisma } from "react-icons/si";
 import { FaGitAlt, FaGithub, FaHtml5, FaCss3Alt } from "react-icons/fa";
 import { MdGroupWork, MdOutlinePsychologyAlt, MdSpeakerNotes } from "react-icons/md";
 import SkillCard from "@/components/skillsCard";
@@ -25,6 +25,7 @@ export default function SkillsSection() {
             { name: "Next.js", icon: SiNextdotjs },
             { name: "Tailwind CSS", icon: SiTailwindcss },
             { name: "Bootstrap", icon: SiBootstrap },
+            { name: "Redux", icon: SiRedux },
           ]}
         />
         <SkillCard
@@ -35,6 +36,7 @@ export default function SkillsSection() {
             { name: "Express.js", icon: SiExpress },
             { name: "MongoDB", icon: SiMongodb },
             { name: "GraphQL", icon: SiGraphql },
+            { name: "Prisma", icon: SiPrisma },
           ]}
         />
         <SkillCard

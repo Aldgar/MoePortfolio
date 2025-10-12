@@ -71,7 +71,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         </a>
       ) : null}
       
-      {/* GitHub link - only show if github prop exists */}
+      {/* GitHub link */}
       {github && (
         <a
           href={github}

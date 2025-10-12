@@ -16,13 +16,17 @@ function footer() {
         <span className="text-gray-600 dark:text-gray-300 text-xl">
           © {new Date().getFullYear()} Mohamed Ibrahim. All rights reserved.
         </span>
-        <div className="flex gap-4">
-          <a href="https://github.com/Aldgar" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-            <FaGithub className="text-2xl text-gray-600 dark:text-gray-300 hover:text-primary transition" />
-          </a>
-          <a href="https://www.linkedin.com/in/mohamed-ibrahim-539308180/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <FaLinkedin className="text-2xl text-gray-600 dark:text-gray-300 hover:text-primary transition" />
-          </a>
+        
+        <div className="flex items-center gap-6">
+          {/* Social Links */}
+          <div className="flex gap-4">
+            <a href="https://github.com/Aldgar" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <FaGithub className="text-2xl text-gray-600 dark:text-gray-300 hover:text-primary transition" />
+            </a>
+            <a href="https://www.linkedin.com/in/mohamed-ibrahim-539308180/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <FaLinkedin className="text-2xl text-gray-600 dark:text-gray-300 hover:text-primary transition" />
+            </a>
+          </div>
         </div>
       </div>
     </motion.footer>

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import Navbar from "@/components/navbar";
+import SmartPortfolioAdapter from "@/components/SmartPortfolioAdapter";
 import Script from "next/script";
 
 const geistSans = Geist({
@@ -16,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mohamed Ibrahim",
-  description: "A Full Stack MERN Developer",
+  title: "Mohamed Ibrahim - AI-Powered Portfolio",
+  description: "Full Stack Developer with AI-Enhanced Portfolio Experience",
 };
 
 export default function RootLayout({
@@ -28,7 +29,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Google Tag Manager script using Next.js Script */}
         <Script id="gtm-init" strategy="afterInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -42,7 +42,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-WL3C9RRC"
@@ -58,8 +57,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
-          {children}
+          <SmartPortfolioAdapter>
+            <Navbar />
+            {children}
+          </SmartPortfolioAdapter>
         </ThemeProvider>
       </body>
     </html>

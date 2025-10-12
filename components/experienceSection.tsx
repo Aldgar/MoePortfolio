@@ -9,11 +9,11 @@ const experiences = [
     company: "Freelance",
     date: "July 2024 – Present",
     bullets: [
-      "Build full-stack apps with performance, scalability, and UX in mind.",
-      "Effective communicator with both technical and non-technical stakeholders.",
-      "Skilled in JavaScript, TypeScript, React, Next.js, NestJS, Jest, and Docker.",
-      "Worked on RESTful APIs, MongoDB, GraphQL, Tailwind CSS, and Bootstrap.",
-      "Thrives in agile teams; experienced with Power BI, Azure AD, and Google Workspace.",
+      "Full-Lifecycle Development: Proven ability to independently manage projects from ideation to deployment, delivering end-to-end solutions focused on performance, scalability, and exceptional user experience.",
+      "Technical Versatility: Proficient in JavaScript, TypeScript, React, Next.js, and NestJS, building dynamic UIs with Tailwind CSS/Bootstrap and robust backends with RESTful APIs, MongoDB, GraphQL NestJS Microservices. Ensures code quality through Jest-based testing and Docker containerization.",
+      "Problem-Solving & Innovation: Adept at implementing creative solutions, committed to best practices in debugging, clean architecture, and delivering maintainable, production-ready applications.",
+      "Strategic & Collaborative Mindset: Cultivated strong project management and communication skills, translating needs into technical execution. Eager to contribute business acumen to fast-evolving, collaborative teams.",
+      "Adaptability & Tooling: Comfortable navigating diverse tech stacks and cloud environments, with familiarity in AWS, Google Suites, Power BI & Microsoft Azure AD Administration.",
     ],
   },
   {
@@ -43,11 +43,17 @@ export default function ExperienceData() {
   return (
     <main className="min-h-screen py-12 px-4 bg-gradient-to-b from-white via-gray-50 to-gray-400 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900 text-white">
       <h1 className="text-5xl font-bold text-center mb-12 mt-6 text-cyan-400">Professional Experience</h1>
-
-      {/* Experience Cards */}
-      <section className="mx-auto max-w-7xl grid gap-10 md:grid-cols-2 lg:grid-cols-3 px-6">
+    <section className="mx-auto max-w-7xl grid gap-10 md:grid-cols-2 lg:grid-cols-3 px-6 mb-24">
         {experiences.map((exp, idx) => (
-          <ExperienceCard key={idx} experience={exp} />
+          <motion.div
+            key={idx}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: idx * 0.1 }}
+            viewport={{ amount: 0.1, once: true }}
+          >
+            <ExperienceCard experience={exp} />
+          </motion.div>
         ))}
       </section>
 
@@ -106,10 +112,6 @@ export default function ExperienceData() {
           <li>
             <p className="font-semibold">BSC Computer Science — Web and Mobile Development</p>
             <p className="italic text-gray-500">2022 – Ongoing – Goldsmiths, University of London – UK</p>
-          </li>
-          <li>
-            <p className="font-semibold">BSC Mechatronics Engineering</p>
-            <p className="italic text-gray-500">2010 – 2015 – BAU University – Istanbul, Türkiye</p>
           </li>
         </ul>
       </motion.div>
