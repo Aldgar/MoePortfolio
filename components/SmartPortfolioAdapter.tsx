@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import EnhancedAIChatWidget from './ui/EnhancedChat';
 
 interface VisitorIntent {
@@ -26,24 +26,7 @@ export default function SmartPortfolioAdapter({ children }: SmartPortfolioAdapte
   const [showBanner, setShowBanner] = useState(false);
   const [showHelperWidget, setShowHelperWidget] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      console.log('🤖 Starting AI visitor analysis...');
-      analyzeVisitorBehavior();
-    }, 3000);
-
-    // Show persistent helper after banner disappears
-    const helperTimer = setTimeout(() => {
-      setShowHelperWidget(true);
-    }, 10000); // Show helper after 10 seconds
-
-    return () => {
-      clearTimeout(timer);
-      clearTimeout(helperTimer);
-    };
-  }, []);
-
-  const analyzeVisitorBehavior = async () => {
+  const analyzeVisitorBehavior = useCallback(async () => {
     try {
       const visitorData: VisitorData = {
         referrer: document.referrer || 'direct',
@@ -95,7 +78,24 @@ export default function SmartPortfolioAdapter({ children }: SmartPortfolioAdapte
         setShowBanner(false);
       }, 8000);
     }
-  };
+  }, []); // Empty dependency array for useCallback
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log('🤖 Starting AI visitor analysis...');
+      analyzeVisitorBehavior();
+    }, 0); // Show immediately
+
+    // Show persistent helper after banner disappears
+    const helperTimer = setTimeout(() => {
+      setShowHelperWidget(true);
+    }, 0); // Show immediately
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(helperTimer);
+    };
+  }, [analyzeVisitorBehavior]);
 
   const generateBehaviorMessage = (data: VisitorData): string => {
     let message = "General portfolio visitor browsing Mohamed Ibrahim's developer portfolio";

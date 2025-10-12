@@ -1,11 +1,22 @@
-import { NextRequest, NextResponse } from 'next/server';
-import OpenAI from 'openai';
+import { NextRequest, NextResponse } from "next/server";
+import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Initialize OpenAI only if API key is available
+let openai: OpenAI | null = null;
 
-type VisitorIntent = 'RECRUITER' | 'CLIENT' | 'COLLABORATOR' | 'STUDENT' | 'PEER' | 'UNKNOWN';
+if (process.env.OPENAI_API_KEY) {
+  openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+}
+
+type VisitorIntent =
+  | "RECRUITER"
+  | "CLIENT"
+  | "COLLABORATOR"
+  | "STUDENT"
+  | "PEER"
+  | "UNKNOWN";
 
 interface IntentAnalysis {
   intent: VisitorIntent;
@@ -17,14 +28,19 @@ interface IntentAnalysis {
 export async function POST(request: NextRequest) {
   try {
     const { message, visitorData } = await request.json();
-    
+
+    // If OpenAI is not available, use keyword analysis only
+    if (!openai) {
+      const analysis = analyzeVisitorIntent(message);
+      return NextResponse.json(analysis);
+    }
+
     // Try AI analysis first, fallback to keywords if needed
     const analysis = await analyzeIntentWithAI(message, visitorData);
-    
+
     return NextResponse.json(analysis);
-    
   } catch (error) {
-    console.error('Intent Analysis Error:', error);
+    console.error("Intent Analysis Error:", error);
 
     // Parse message from request for fallback analysis
     const { message } = await request.json();
@@ -40,13 +56,21 @@ interface VisitorData {
   userAgent?: string;
 }
 
-async function analyzeIntentWithAI(message: string, visitorData: VisitorData): Promise<IntentAnalysis> {
+async function analyzeIntentWithAI(
+  message: string,
+  visitorData: VisitorData
+): Promise<IntentAnalysis> {
+  // If OpenAI is not available, fallback to keyword analysis
+  if (!openai) {
+    return analyzeVisitorIntent(message);
+  }
+
   const prompt = `
 Analyze this visitor's intent for Mohamed Ibrahim's Full-Stack Developer portfolio:
 
 Message: "${message}"
-Referrer: ${visitorData?.referrer || 'direct'}
-User Agent: ${visitorData?.userAgent?.slice(0, 50) || 'unknown'}
+Referrer: ${visitorData?.referrer || "direct"}
+User Agent: ${visitorData?.userAgent?.slice(0, 50) || "unknown"}
 
 Determine the visitor type:
 - RECRUITER: Looking to hire Mohamed for employment
@@ -72,18 +96,18 @@ Respond ONLY with valid JSON:
   });
 
   const aiResponse = completion.choices[0].message.content;
-  
+
   try {
-    const parsed = JSON.parse(aiResponse || '{}');
-    
+    const parsed = JSON.parse(aiResponse || "{}");
+
     return {
-      intent: parsed.intent || 'UNKNOWN',
+      intent: parsed.intent || "UNKNOWN",
       confidence: Math.min(parsed.confidence || 0.5, 1),
-      reasoning: `AI Analysis: ${parsed.reasoning || 'Analysis completed'}`,
-      suggestions: generateSuggestions(parsed.intent || 'UNKNOWN')
+      reasoning: `AI Analysis: ${parsed.reasoning || "Analysis completed"}`,
+      suggestions: generateSuggestions(parsed.intent || "UNKNOWN"),
     };
   } catch {
-    console.log('AI response parsing failed, using keyword fallback');
+    console.log("AI response parsing failed, using keyword fallback");
     return analyzeVisitorIntent(message);
   }
 }
@@ -91,30 +115,93 @@ Respond ONLY with valid JSON:
 // Keep keyword-based analysis as fallback
 function analyzeVisitorIntent(message: string): IntentAnalysis {
   const lowerMessage = message.toLowerCase();
-  
-  const recruiterKeywords = ['hire', 'job', 'position', 'career', 'interview', 'resume', 'cv', 'salary', 'employment', 'opportunity', 'team', 'company'];
-  const clientKeywords = ['project', 'build', 'develop', 'website', 'app', 'cost', 'price', 'budget', 'timeline', 'business', 'startup'];
-  const collaboratorKeywords = ['collaborate', 'partner', 'together', 'team up', 'contribute', 'open source', 'github', 'work with'];
-  const studentKeywords = ['learn', 'tutorial', 'how to', 'beginner', 'course', 'study', 'university', 'student', 'help me understand'];
-  const peerKeywords = ['developer', 'programmer', 'code', 'tech', 'framework', 'library', 'architecture', 'best practices'];
-  
+
+  const recruiterKeywords = [
+    "hire",
+    "job",
+    "position",
+    "career",
+    "interview",
+    "resume",
+    "cv",
+    "salary",
+    "employment",
+    "opportunity",
+    "team",
+    "company",
+  ];
+  const clientKeywords = [
+    "project",
+    "build",
+    "develop",
+    "website",
+    "app",
+    "cost",
+    "price",
+    "budget",
+    "timeline",
+    "business",
+    "startup",
+  ];
+  const collaboratorKeywords = [
+    "collaborate",
+    "partner",
+    "together",
+    "team up",
+    "contribute",
+    "open source",
+    "github",
+    "work with",
+  ];
+  const studentKeywords = [
+    "learn",
+    "tutorial",
+    "how to",
+    "beginner",
+    "course",
+    "study",
+    "university",
+    "student",
+    "help me understand",
+  ];
+  const peerKeywords = [
+    "developer",
+    "programmer",
+    "code",
+    "tech",
+    "framework",
+    "library",
+    "architecture",
+    "best practices",
+  ];
+
   const scores = {
-    RECRUITER: recruiterKeywords.filter(keyword => lowerMessage.includes(keyword)).length,
-    CLIENT: clientKeywords.filter(keyword => lowerMessage.includes(keyword)).length,
-    COLLABORATOR: collaboratorKeywords.filter(keyword => lowerMessage.includes(keyword)).length,
-    STUDENT: studentKeywords.filter(keyword => lowerMessage.includes(keyword)).length,
-    PEER: peerKeywords.filter(keyword => lowerMessage.includes(keyword)).length
+    RECRUITER: recruiterKeywords.filter((keyword) =>
+      lowerMessage.includes(keyword)
+    ).length,
+    CLIENT: clientKeywords.filter((keyword) => lowerMessage.includes(keyword))
+      .length,
+    COLLABORATOR: collaboratorKeywords.filter((keyword) =>
+      lowerMessage.includes(keyword)
+    ).length,
+    STUDENT: studentKeywords.filter((keyword) => lowerMessage.includes(keyword))
+      .length,
+    PEER: peerKeywords.filter((keyword) => lowerMessage.includes(keyword))
+      .length,
   };
-  
+
   const maxScore = Math.max(...Object.values(scores));
-  const intent = Object.keys(scores).find(key => scores[key as keyof typeof scores] === maxScore) as VisitorIntent || 'UNKNOWN';
+  const intent =
+    (Object.keys(scores).find(
+      (key) => scores[key as keyof typeof scores] === maxScore
+    ) as VisitorIntent) || "UNKNOWN";
   const confidence = maxScore > 0 ? Math.min(maxScore / 3, 1) : 0.1;
-  
+
   return {
     intent,
     confidence,
     reasoning: `Keyword Analysis: Found ${maxScore} matching terms`,
-    suggestions: generateSuggestions(intent)
+    suggestions: generateSuggestions(intent),
   };
 }
 
@@ -124,39 +211,39 @@ function generateSuggestions(intent: VisitorIntent): string[] {
       "View Mohamed's Resume",
       "Schedule Interview",
       "Check Availability",
-      "Technical Skills Assessment"
+      "Technical Skills Assessment",
     ],
     CLIENT: [
       "Get Project Quote",
       "View Portfolio",
       "Schedule Consultation",
-      "Discuss Requirements"
+      "Discuss Requirements",
     ],
     COLLABORATOR: [
       "GitHub Profile",
-      "Open Source Projects", 
+      "Open Source Projects",
       "Partnership Opportunities",
-      "Contact for Collaboration"
+      "Contact for Collaboration",
     ],
     STUDENT: [
       "Learning Resources",
       "Code Examples",
       "Mentorship Info",
-      "Beginner Projects"
+      "Beginner Projects",
     ],
     PEER: [
       "Technical Discussion",
       "Best Practices",
       "Architecture Insights",
-      "Connect on LinkedIn"
+      "Connect on LinkedIn",
     ],
     UNKNOWN: [
-      "Explore Portfolio", 
+      "Explore Portfolio",
       "About Mohamed",
       "Contact Information",
-      "Featured Projects"
-    ]
+      "Featured Projects",
+    ],
   };
-  
+
   return suggestionMap[intent] || suggestionMap.UNKNOWN;
 }

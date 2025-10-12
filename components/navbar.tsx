@@ -91,63 +91,80 @@ function Navbar() {
       {/* Desktop Menu */}
       <div className="hidden sm:flex items-center gap-4 text-gray-700 dark:text-gray-400 min-w-max">
         <NavigationMenuItem>
-          <NavigationMenuLink href="#about" className={navigationMenuTriggerStyle()}>
+          <NavigationMenuLink
+            href="#about"
+            className={navigationMenuTriggerStyle()}
+          >
             About
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink href="#skills" className={navigationMenuTriggerStyle()}>
+          <NavigationMenuLink
+            href="#skills"
+            className={navigationMenuTriggerStyle()}
+          >
             Skills
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink href="#projects" className={navigationMenuTriggerStyle()}>
+          <NavigationMenuLink
+            href="#projects"
+            className={navigationMenuTriggerStyle()}
+          >
             Projects
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink href="#experience" className={navigationMenuTriggerStyle()}>
+          <NavigationMenuLink
+            href="#experience"
+            className={navigationMenuTriggerStyle()}
+          >
             Experience
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink href="#contact" className={navigationMenuTriggerStyle()}>
+          <NavigationMenuLink
+            href="#contact"
+            className={navigationMenuTriggerStyle()}
+          >
             Contact
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink href="#downloadCv" className={navigationMenuTriggerStyle()}>
+          <NavigationMenuLink
+            href="#downloadCv"
+            className={navigationMenuTriggerStyle()}
+          >
             Download CV
           </NavigationMenuLink>
         </NavigationMenuItem>
-        
-        
         {/* Admin Panel Button */}
-        {pathname !== '/admin' && (
-        <NavigationMenuItem>
-          <div className="relative group">
-            <Link
-              href="/admin"
-              className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
-              title="Admin Dashboard"
-            >
-              <span className="mr-2">🎛️</span>
-              Admin
-            </Link>
-            
-            {/* Tooltip */}
-            <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-50">
-              <div className="relative">
-                <div className="bg-gray-900 dark:bg-gray-800 text-white text-xs px-3 py-2 rounded-lg shadow-xl whitespace-nowrap border border-gray-700 dark:border-gray-600">
-                  Analytics & Management
+        {pathname !== "/admin" && (
+          <NavigationMenuItem>
+            <div className="relative group">
+              <Link
+                href="/admin"
+                className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                title="Admin Dashboard"
+              >
+                <span className="mr-2">🎛️</span>
+                Admin
+              </Link>
+
+              {/* Tooltip */}
+              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none z-50">
+                <div className="relative">
+                  <div className="bg-gray-900 dark:bg-gray-800 text-white text-xs px-3 py-2 rounded-lg shadow-xl whitespace-nowrap border border-gray-700 dark:border-gray-600">
+                    Analytics & Management
+                  </div>
+                  {/* Arrow pointing up */}
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-l-transparent border-r-transparent border-b-gray-900 dark:border-b-gray-800"></div>
                 </div>
-                {/* Arrow pointing up */}
-                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-l-transparent border-r-transparent border-b-gray-900 dark:border-b-gray-800"></div>
               </div>
             </div>
-          </div>
-        </NavigationMenuItem>
-        )}        {mounted && (
+          </NavigationMenuItem>
+        )}{" "}
+        {mounted && (
           <button
             aria-label="Toggle Dark Mode"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -169,48 +186,72 @@ function Navbar() {
           className="absolute left-0 top-full w-full bg-white dark:bg-gray-950 shadow-lg rounded-b-xl flex flex-col items-start gap-2 px-4 py-4 sm:hidden z-50"
         >
           <NavigationMenuItem>
-            <NavigationMenuLink href="#about" className={navigationMenuTriggerStyle()} onClick={() => setMobileOpen(false)}>
+            <NavigationMenuLink
+              href="#about"
+              className={navigationMenuTriggerStyle()}
+              onClick={() => setMobileOpen(false)}
+            >
               About
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink href="#skills" className={navigationMenuTriggerStyle()} onClick={() => setMobileOpen(false)}>
+            <NavigationMenuLink
+              href="#skills"
+              className={navigationMenuTriggerStyle()}
+              onClick={() => setMobileOpen(false)}
+            >
               Skills
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink href="#projects" className={navigationMenuTriggerStyle()} onClick={() => setMobileOpen(false)}>
+            <NavigationMenuLink
+              href="#projects"
+              className={navigationMenuTriggerStyle()}
+              onClick={() => setMobileOpen(false)}
+            >
               Projects
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink href="#experience" className={navigationMenuTriggerStyle()} onClick={() => setMobileOpen(false)}>
+            <NavigationMenuLink
+              href="#experience"
+              className={navigationMenuTriggerStyle()}
+              onClick={() => setMobileOpen(false)}
+            >
               Experience
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink href="#contact" className={navigationMenuTriggerStyle()} onClick={() => setMobileOpen(false)}>
+            <NavigationMenuLink
+              href="#contact"
+              className={navigationMenuTriggerStyle()}
+              onClick={() => setMobileOpen(false)}
+            >
               Contact
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <NavigationMenuLink href="#downloadCv" className={navigationMenuTriggerStyle()} onClick={() => setMobileOpen(false)}>
+            <NavigationMenuLink
+              href="#downloadCv"
+              className={navigationMenuTriggerStyle()}
+              onClick={() => setMobileOpen(false)}
+            >
               Download CV
             </NavigationMenuLink>
           </NavigationMenuItem>
-          
+
           {/* Admin Panel Button for Mobile */}
-          {pathname !== '/admin' && (
-          <NavigationMenuItem>
-            <Link
-              href="/admin"
-              className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
-              onClick={() => setMobileOpen(false)}
-            >
-              <span className="mr-2">🎛️</span>
-              Admin Panel
-            </Link>
-          </NavigationMenuItem>
+          {pathname !== "/admin" && (
+            <NavigationMenuItem>
+              <Link
+                href="/admin"
+                className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                onClick={() => setMobileOpen(false)}
+              >
+                <span className="mr-2">🎛️</span>
+                Admin Panel
+              </Link>
+            </NavigationMenuItem>
           )}
 
           {mounted && (
@@ -232,4 +273,4 @@ function Navbar() {
   );
 }
 
-export default Navbar
+export default Navbar;

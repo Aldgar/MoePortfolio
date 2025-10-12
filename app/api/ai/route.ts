@@ -1,9 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server';
-import OpenAI from 'openai';
+import { NextRequest, NextResponse } from "next/server";
+import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Initialize OpenAI only if API key is available
+let openai: OpenAI | null = null;
+
+if (process.env.OPENAI_API_KEY) {
+  openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+}
 
 // Mohamed's comprehensive data for AI responses
 const MOHAMED_DATA = {
@@ -13,7 +18,7 @@ const MOHAMED_DATA = {
     location: "Portugal",
     email: "mohamed@example.com", // Replace with real email
     linkedin: "https://linkedin.com/in/your-profile",
-    github: "https://github.com/MohamedIbrahem4"
+    github: "https://github.com/MohamedIbrahem4",
   },
   experience: {
     current: {
@@ -22,66 +27,103 @@ const MOHAMED_DATA = {
       duration: "2023 - Present",
       responsibilities: [
         "Developing scalable web applications using React and Next.js",
-        "Building robust backend APIs with NestJS and TypeScript", 
+        "Building robust backend APIs with NestJS and TypeScript",
         "Optimizing database performance and implementing caching strategies",
-        "Leading code reviews and mentoring junior developers"
-      ]
+        "Leading code reviews and mentoring junior developers",
+      ],
     },
     skills: {
-      frontend: ["React", "Next.js", "TypeScript", "Tailwind CSS", "JavaScript"],
+      frontend: [
+        "React",
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "JavaScript",
+      ],
       backend: ["NestJS", "Node.js", "Express", "REST APIs", "GraphQL"],
       database: ["PostgreSQL", "MongoDB", "Redis", "Prisma"],
-      tools: ["Git", "Docker", "AWS", "Vercel", "CI/CD"]
-    }
+      tools: ["Git", "Docker", "AWS", "Vercel", "CI/CD"],
+    },
   },
   projects: [
     {
       name: "NilToum Connect",
       type: "Job Platform",
-      description: "A comprehensive job matching platform connecting employers with candidates",
-      technologies: ["Next.js", "NestJS", "PostgreSQL", "TypeScript", "Tailwind CSS"],
+      description:
+        "A comprehensive job matching platform connecting employers with candidates",
+      technologies: [
+        "Next.js",
+        "NestJS",
+        "PostgreSQL",
+        "TypeScript",
+        "Tailwind CSS",
+      ],
       features: [
         "Advanced job search and filtering",
         "Real-time messaging system",
         "AI-powered job matching",
         "Comprehensive user profiles",
-        "Payment integration for premium features"
+        "Payment integration for premium features",
       ],
       challenges: [
         "Implementing real-time notifications",
         "Optimizing search performance with large datasets",
-        "Building secure authentication system"
+        "Building secure authentication system",
       ],
-      architecture: "Microservices with API Gateway, separate frontend and backend, Redis for caching"
+      architecture:
+        "Microservices with API Gateway, separate frontend and backend, Redis for caching",
     },
     {
       name: "E-Commerce Platform",
-      type: "Web Application", 
+      type: "Web Application",
       description: "Modern e-commerce solution with inventory management",
       technologies: ["React", "Node.js", "MongoDB", "Stripe"],
-      features: ["Product catalog", "Shopping cart", "Payment processing", "Admin dashboard"],
-      challenges: ["Payment security", "Inventory synchronization", "Performance optimization"]
-    }
-  ]
+      features: [
+        "Product catalog",
+        "Shopping cart",
+        "Payment processing",
+        "Admin dashboard",
+      ],
+      challenges: [
+        "Payment security",
+        "Inventory synchronization",
+        "Performance optimization",
+      ],
+    },
+  ],
 };
 
 export async function POST(request: NextRequest) {
   try {
     const { message, action, visitorIntent } = await request.json();
-    
+
+    // If OpenAI is not available, return fallback response
+    if (!openai) {
+      return NextResponse.json({
+        response: getFallbackResponse(message, action),
+        responseType: "FALLBACK",
+        actionSuggestions: [
+          "View Portfolio",
+          "Contact Mohamed",
+          "Download Resume",
+          "See Projects",
+        ],
+      });
+    }
+
     // Determine what type of response to generate
     const responseType = determineResponseType(message, action);
-    
+
     let systemPrompt = "";
-    
+
     switch (responseType) {
-      case 'RESUME_GENERATION':
+      case "RESUME_GENERATION":
         systemPrompt = createResumePrompt(visitorIntent);
         break;
-      case 'PROJECT_DEMO':
+      case "PROJECT_DEMO":
         systemPrompt = createProjectDemoPrompt();
         break;
-      case 'TECHNICAL_INTERVIEW':
+      case "TECHNICAL_INTERVIEW":
         systemPrompt = createInterviewPrompt();
         break;
       default:
@@ -92,62 +134,108 @@ export async function POST(request: NextRequest) {
       model: "gpt-3.5-turbo",
       messages: [
         { role: "system", content: systemPrompt },
-        { role: "user", content: message }
+        { role: "user", content: message },
       ],
       max_tokens: 500,
       temperature: 0.7,
     });
 
     const response = completion.choices[0].message.content;
-    
-    return NextResponse.json({ 
+
+    return NextResponse.json({
       response,
       responseType,
-      actionSuggestions: generateActionSuggestions(responseType)
+      actionSuggestions: generateActionSuggestions(responseType),
     });
-    
   } catch (error: unknown) {
-    console.error('AI Error:', error);
+    console.error("AI Error:", error);
     return NextResponse.json(
-      { error: 'AI service temporarily unavailable' },
+      { error: "AI service temporarily unavailable" },
       { status: 500 }
     );
   }
 }
 
+function getFallbackResponse(message: string, action?: string): string {
+  const lowerMessage = message.toLowerCase();
+
+  // Resume/CV requests
+  if (
+    lowerMessage.includes("resume") ||
+    lowerMessage.includes("cv") ||
+    action === "RESUME_GENERATION"
+  ) {
+    return `Hi! I'm Mohamed Ibrahim, a Full-Stack Developer with extensive experience in React, Next.js, NestJS, and modern web technologies. I'm currently working at Teleperformance Portugal, building scalable applications and leading development teams. I'd be happy to share my detailed resume with you - would you like me to generate a custom version highlighting specific skills relevant to your needs?`;
+  }
+
+  // Project demonstration requests
+  if (
+    lowerMessage.includes("project") ||
+    lowerMessage.includes("demo") ||
+    action === "PROJECT_DEMO"
+  ) {
+    return `I'd love to show you my projects! My flagship project is NilToum Connect, a comprehensive job platform built with Next.js, NestJS, and PostgreSQL. It features real-time messaging, AI-powered job matching, and advanced search capabilities. I also have an e-commerce platform with inventory management and payment processing. Which project would you like to explore in detail?`;
+  }
+
+  // Technical questions
+  if (
+    lowerMessage.includes("technical") ||
+    lowerMessage.includes("code") ||
+    action === "TECHNICAL_INTERVIEW"
+  ) {
+    return `Great technical question! I have hands-on experience with modern full-stack architecture, from React/Next.js frontends to NestJS/Node.js backends, working with PostgreSQL, MongoDB, and Redis. I focus on scalable, maintainable code and have experience with microservices, API design, and performance optimization. What specific technical area would you like to discuss?`;
+  }
+
+  // General greeting or questions
+  return `Hello! I'm Mohamed Ibrahim's AI assistant. I can help you learn about Mohamed's background as a Full-Stack Developer, his projects, technical skills, and experience. Mohamed specializes in React, Next.js, NestJS, TypeScript, and building scalable web applications. What would you like to know about his work?`;
+}
+
 function determineResponseType(message: string, action?: string): string {
   const lowerMessage = message.toLowerCase();
-  
+
   if (action) return action;
-  
+
   // Resume generation keywords
-  if (lowerMessage.includes('resume') || lowerMessage.includes('cv') || 
-      lowerMessage.includes('download') || lowerMessage.includes('hire')) {
-    return 'RESUME_GENERATION';
+  if (
+    lowerMessage.includes("resume") ||
+    lowerMessage.includes("cv") ||
+    lowerMessage.includes("download") ||
+    lowerMessage.includes("hire")
+  ) {
+    return "RESUME_GENERATION";
   }
-  
-  // Project demo keywords  
-  if (lowerMessage.includes('show me') || lowerMessage.includes('demo') ||
-      lowerMessage.includes('project') || lowerMessage.includes('walk through')) {
-    return 'PROJECT_DEMO';
+
+  // Project demo keywords
+  if (
+    lowerMessage.includes("show me") ||
+    lowerMessage.includes("demo") ||
+    lowerMessage.includes("project") ||
+    lowerMessage.includes("walk through")
+  ) {
+    return "PROJECT_DEMO";
   }
-  
+
   // Technical interview keywords
-  if (lowerMessage.includes('how would you') || lowerMessage.includes('explain') ||
-      lowerMessage.includes('technical') || lowerMessage.includes('code') ||
-      lowerMessage.includes('architecture')) {
-    return 'TECHNICAL_INTERVIEW';
+  if (
+    lowerMessage.includes("how would you") ||
+    lowerMessage.includes("explain") ||
+    lowerMessage.includes("technical") ||
+    lowerMessage.includes("code") ||
+    lowerMessage.includes("architecture")
+  ) {
+    return "TECHNICAL_INTERVIEW";
   }
-  
-  return 'GENERAL';
+
+  return "GENERAL";
 }
 
 function createResumePrompt(visitorIntent?: string): string {
-  const intentFocus = visitorIntent === 'RECRUITER' ? 
-    'technical skills and employment readiness' :
-    visitorIntent === 'CLIENT' ? 
-    'project delivery and business value' :
-    'comprehensive technical background';
+  const intentFocus =
+    visitorIntent === "RECRUITER"
+      ? "technical skills and employment readiness"
+      : visitorIntent === "CLIENT"
+        ? "project delivery and business value"
+        : "comprehensive technical background";
 
   return `You are Mohamed Ibrahim's AI assistant specializing in resume generation. 
 
@@ -212,33 +300,33 @@ Keep responses informative but concise. Always offer to provide more specific in
 
 function generateActionSuggestions(responseType: string): string[] {
   switch (responseType) {
-    case 'RESUME_GENERATION':
+    case "RESUME_GENERATION":
       return [
         "Generate Custom PDF Resume",
         "View Technical Skills",
-        "See Work Experience", 
-        "Download Portfolio"
+        "See Work Experience",
+        "Download Portfolio",
       ];
-    case 'PROJECT_DEMO':
+    case "PROJECT_DEMO":
       return [
         "Show NilToum Connect Demo",
         "View Project Architecture",
         "See Code Examples",
-        "Explore Live Projects"
+        "Explore Live Projects",
       ];
-    case 'TECHNICAL_INTERVIEW':
+    case "TECHNICAL_INTERVIEW":
       return [
         "Ask Another Technical Question",
         "See Code Implementation",
         "Discuss Architecture Decisions",
-        "View Problem-Solving Examples"
+        "View Problem-Solving Examples",
       ];
     default:
       return [
         "Learn About Projects",
         "View Resume",
         "Ask Technical Questions",
-        "Contact Mohamed"
+        "Contact Mohamed",
       ];
   }
 }
