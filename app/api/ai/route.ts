@@ -641,7 +641,7 @@ function generateIntelligentFallback(
     message.includes("tech") ||
     message.includes("experience")
   ) {
-    return "Mohamed is a full-stack developer with 1+ years of experience. His technical stack includes React, Next.js, Node.js, TypeScript, Python, and AWS. He specializes in building scalable web applications and has experience with both frontend and backend development. What specific technology would you like to know more about?";
+    return "Mohamed is a full-stack developer with 1+ years of experience. His technical stack includes React, Next.js, Node.js, TypeScript, and AWS. He specializes in building scalable web applications and has experience with both frontend and backend development and AI technologies. What specific technology would you like to know more about?";
   }
 
   // Hiring/Employment inquiries
