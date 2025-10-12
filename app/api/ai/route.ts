@@ -15,9 +15,9 @@ const MOHAMED_DATA = {
   personal: {
     name: "Mohamed Ibrahim",
     title: "Full-Stack Developer",
-    location: "Cairo, Egypt",
-    email: "mo@mohamedibrahim.net",
-    whatsapp: "+20 115 550 1013",
+    location: "Lisbon, Portugal",
+    email: "aldgar1988@protonmail.com",
+    whatsapp: "+351 914 14 33 40",
     linkedin: "https://www.linkedin.com/in/mohamed-ibrahim-539308180/",
     github: "https://github.com/Aldgar",
     portfolioWebsite: "Available on this website's contact section",
@@ -25,7 +25,7 @@ const MOHAMED_DATA = {
   experience: {
     current: {
       role: "Full-Stack Developer",
-      duration: "3+ years of experience",
+      duration: "1+ years of experience",
       focus: "Building scalable web applications and modern software solutions",
       responsibilities: [
         "Developing scalable web applications using React and Next.js",
@@ -360,7 +360,9 @@ MOHAMED'S DATA: ${JSON.stringify(MOHAMED_DATA, null, 2)}
 
 ${conversationContext}
 
-IMPORTANT: For PDF resume requests, say: "I can connect you with Mohamed for a personalized resume. Contact mo@mohamedibrahim.net or WhatsApp +20 115 550 1013 for a custom PDF resume tailored to your specific needs."
+IMPORTANT: For PDF resume requests, say: "I can help you get Mohamed's resume right now! You can download his complete CV directly from this website. Just scroll down to the 'Download My CV' section, or I can provide you with the direct download link: /Mohamed-Ibrahim-Full-Stack-Software-Developer-Resume.pdf
+
+This resume includes his full technical skills, experience, and project portfolio. Would you like me to highlight any specific aspects of his background?"
 
 Focus on ${intentFocus} while being contextual to previous conversation.
 
@@ -435,10 +437,11 @@ ${conversationContext}
 
 IMPORTANT INSTRUCTIONS:
 1. ALWAYS reference previous conversation when relevant
-2. For resume/PDF requests: Say "I can help you contact Mohamed for a personalized resume. Here's his contact info: mo@mohamedibrahim.net or WhatsApp +20 115 550 1013"
-3. Be contextual - build on previous topics discussed
-4. Provide dynamic responses that feel like a real conversation
-5. Never use generic pre-written answers
+2. For resume/PDF requests: Say "I can help you get Mohamed's resume right now! You can download his complete CV directly from this website. Just scroll down to the 'Download My CV' section or use this direct link: /Mohamed-Ibrahim-Full-Stack-Software-Developer-Resume.pdf"
+3. For contact requests: Use ONLY the contact information from MOHAMED_DATA above (aldgar1988@protonmail.com, +351 914 14 33 40, Lisbon Portugal)
+4. Be contextual - build on previous topics discussed
+5. Provide dynamic responses that feel like a real conversation
+6. Never use generic pre-written answers or hardcoded contact info
 
 Current context: ${lastUserMessage ? `Responding to: "${lastUserMessage}"` : "Starting conversation"}
 
@@ -521,11 +524,10 @@ function generateContextualSuggestions(
     response.includes("contact")
   ) {
     return [
-      "Generate a custom PDF resume",
-      "What's your availability?",
-      "What are your salary expectations?",
-      "Can we schedule a call?",
-      "Send me your portfolio link",
+      "Download CV PDF now",
+      "View technical skills details",
+      "See project portfolio",
+      "Contact for opportunities",
     ];
   }
 
@@ -606,7 +608,7 @@ function generateIntelligentFallback(
     message.includes("pdf") ||
     message.includes("cv")
   ) {
-    return "I'd be happy to help you get Mohamed's resume! For a personalized PDF resume tailored to your specific needs, please contact Mohamed directly at mo@mohamedibrahim.net or WhatsApp +20 115 550 1013. He can create a custom resume highlighting the most relevant experience for your requirements.";
+    return "Great! I can help you get Mohamed's resume right away! 📄\n\nYou can download his complete CV directly from this website:\n• Scroll down to the 'Download My CV' section\n• Or use this direct link: /Mohamed-Ibrahim-Full-Stack-Software-Developer-Resume.pdf\n\nThis resume includes his full technical skills, 3+ years of experience, and detailed project portfolio. Would you like me to highlight any specific aspects of his background?";
   }
 
   // Project inquiries
@@ -627,7 +629,7 @@ function generateIntelligentFallback(
     message.includes("email") ||
     message.includes("reach")
   ) {
-    return `${hasAskedAboutContact ? "As mentioned earlier, here's" : "Here's"} Mohamed's contact information:\n📧 Email: mo@mohamedibrahim.net\n📱 WhatsApp: +20 115 550 1013\n\nHe's always open to discussing new opportunities and collaborations!`;
+    return `${hasAskedAboutContact ? "As mentioned earlier, here's" : "Here's"} Mohamed's contact information:\n📧 Email: aldgar1988@protonmail.com\n📱 WhatsApp: +351 914 14 33 40\n📍 Location: Lisbon, Portugal\n\nHe's always open to discussing new opportunities and collaborations!`;
   }
 
   // Skills inquiries
@@ -641,8 +643,8 @@ function generateIntelligentFallback(
 
   // Default contextual response
   if (conversationHistory.length > 0) {
-    return `I understand you're asking about "${userMessage}". While I'm temporarily unable to provide my full AI capabilities, I can still help you learn about Mohamed's professional background. Please feel free to contact him directly at mo@mohamedibrahim.net for detailed discussions!`;
+    return `I understand you're asking about "${userMessage}". While I'm temporarily unable to provide my full AI capabilities, I can still help you learn about Mohamed's professional background. Please feel free to contact him directly at aldgar1988@protonmail.com for detailed discussions!`;
   }
 
-  return "Hello! I'm Mohamed's AI assistant. While I'm temporarily experiencing some technical issues, I can still help you learn about his work. Mohamed is a full-stack developer specializing in React, Next.js, and modern web technologies. For detailed conversations, please reach out to him at mo@mohamedibrahim.net!";
+  return "Hello! I'm Mohamed's AI assistant. While I'm temporarily experiencing some technical issues, I can still help you learn about his work. Mohamed is a full-stack developer specializing in React, Next.js, and modern web technologies. For detailed conversations, please reach out to him at aldgar1988@protonmail.com!";
 }

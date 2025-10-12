@@ -31,7 +31,7 @@ export default function EnhancedAIChatWidget() {
           actionSuggestions: [
             "What are Mohamed's technical skills?",
             "Show me his featured projects",
-            "Tell me about his experience",
+            "Download CV PDF now",
             "How can I hire Mohamed?",
           ],
         },
@@ -121,6 +121,28 @@ export default function EnhancedAIChatWidget() {
   };
 
   const handleSuggestionClick = (suggestion: string) => {
+    // Handle special download action
+    if (suggestion === "Download CV PDF now") {
+      // Trigger download
+      const link = document.createElement("a");
+      link.href = "/Mohamed-Ibrahim-Full-Stack-Software-Developer-Resume.pdf";
+      link.download = "Mohamed-Ibrahim-Resume.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // Add a message to chat
+      const downloadMessage: ChatMessage = {
+        role: "assistant",
+        content:
+          "📄 Great! I've started downloading Mohamed's CV for you. The file should appear in your downloads folder shortly. This resume includes his complete technical skills, 3+ years of experience, and detailed project portfolio.",
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, downloadMessage]);
+      return;
+    }
+
+    // Handle normal suggestions
     setInputMessage(suggestion);
     sendMessage();
   };
