@@ -439,9 +439,10 @@ IMPORTANT INSTRUCTIONS:
 1. ALWAYS reference previous conversation when relevant
 2. For resume/PDF requests: Say "I can help you get Mohamed's resume right now! You can download his complete CV directly from this website. Just scroll down to the 'Download My CV' section or use this direct link: /Mohamed-Ibrahim-Full-Stack-Software-Developer-Resume.pdf"
 3. For contact requests: Use ONLY the contact information from MOHAMED_DATA above (aldgar1988@protonmail.com, +351 914 14 33 40, Lisbon Portugal)
-4. Be contextual - build on previous topics discussed
-5. Provide dynamic responses that feel like a real conversation
-6. Never use generic pre-written answers or hardcoded contact info
+4. For hiring/employment inquiries: Be enthusiastic and professional! Mohamed is actively seeking opportunities. Highlight his skills, experience, and availability.
+5. Be contextual - build on previous topics discussed
+6. Provide dynamic responses that feel like a real conversation
+7. Never use generic pre-written answers or hardcoded contact info
 
 Current context: ${lastUserMessage ? `Responding to: "${lastUserMessage}"` : "Starting conversation"}
 
@@ -521,13 +522,15 @@ function generateContextualSuggestions(
     message.includes("hire") ||
     message.includes("contact") ||
     message.includes("resume") ||
-    response.includes("contact")
+    response.includes("contact") ||
+    message.includes("opportunity") ||
+    message.includes("job")
   ) {
     return [
       "Download CV PDF now",
-      "View technical skills details",
-      "See project portfolio",
-      "Contact for opportunities",
+      "What's your availability?",
+      "Discuss project requirements",
+      "View portfolio & experience",
     ];
   }
 
@@ -608,7 +611,7 @@ function generateIntelligentFallback(
     message.includes("pdf") ||
     message.includes("cv")
   ) {
-    return "Great! I can help you get Mohamed's resume right away! 📄\n\nYou can download his complete CV directly from this website:\n• Scroll down to the 'Download My CV' section\n• Or use this direct link: /Mohamed-Ibrahim-Full-Stack-Software-Developer-Resume.pdf\n\nThis resume includes his full technical skills, 3+ years of experience, and detailed project portfolio. Would you like me to highlight any specific aspects of his background?";
+    return "Great! I can help you get Mohamed's resume right away! 📄\n\nYou can download his complete CV directly from this website:\n• Scroll down to the 'Download My CV' section\n• Or use this direct link: /Mohamed-Ibrahim-Full-Stack-Software-Developer-Resume.pdf\n\nThis resume includes his full technical skills, 1+ years of experience, and detailed project portfolio. Would you like me to highlight any specific aspects of his background?";
   }
 
   // Project inquiries
@@ -638,7 +641,20 @@ function generateIntelligentFallback(
     message.includes("tech") ||
     message.includes("experience")
   ) {
-    return "Mohamed is a full-stack developer with 3+ years of experience. His technical stack includes React, Next.js, Node.js, TypeScript, Python, and AWS. He specializes in building scalable web applications and has experience with both frontend and backend development. What specific technology would you like to know more about?";
+    return "Mohamed is a full-stack developer with 1+ years of experience. His technical stack includes React, Next.js, Node.js, TypeScript, Python, and AWS. He specializes in building scalable web applications and has experience with both frontend and backend development. What specific technology would you like to know more about?";
+  }
+
+  // Hiring/Employment inquiries
+  if (
+    message.includes("hire") ||
+    message.includes("employment") ||
+    message.includes("job") ||
+    message.includes("work with") ||
+    message.includes("recruit") ||
+    message.includes("position") ||
+    message.includes("opportunity")
+  ) {
+    return "Great question! Mohamed is actively open to new opportunities and collaborations. 🚀\n\n✅ **Available for:**\n• Full-time positions\n• Freelance projects\n• Contract work\n• Remote opportunities\n\n📧 **Get in touch:**\nEmail: aldgar1988@protonmail.com\nWhatsApp: +351 914 14 33 40\nLocation: Lisbon, Portugal\n\nHe's experienced in React, Next.js, Node.js, TypeScript, and modern web development. Feel free to reach out to discuss your project requirements!";
   }
 
   // Default contextual response
