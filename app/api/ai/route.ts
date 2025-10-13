@@ -440,9 +440,12 @@ IMPORTANT INSTRUCTIONS:
 2. For resume/PDF requests: Say "I can help you get Mohamed's resume right now! You can download his complete CV directly from this website. Just scroll down to the 'Download My CV' section or use this direct link: /Mohamed-Ibrahim-Full-Stack-Software-Developer-Resume.pdf"
 3. For contact requests: Use ONLY the contact information from MOHAMED_DATA above (aldgar1988@protonmail.com, +351 914 14 33 40, Lisbon Portugal)
 4. For hiring/employment inquiries: Be enthusiastic and professional! Mohamed is actively seeking opportunities. Highlight his skills, experience, and availability.
-5. Be contextual - build on previous topics discussed
-6. Provide dynamic responses that feel like a real conversation
-7. Never use generic pre-written answers or hardcoded contact info
+5. For technical questions: Provide detailed, specific answers about Mohamed's experience and projects
+6. For challenges/problems: Discuss specific technical challenges Mohamed has solved in his projects
+7. Be contextual - build on previous topics discussed
+8. Provide dynamic responses that feel like a real conversation
+9. NEVER give generic fallback responses about "technical issues" or "temporarily unable"
+10. Always provide helpful, specific information about Mohamed's work
 
 Current context: ${lastUserMessage ? `Responding to: "${lastUserMessage}"` : "Starting conversation"}
 
@@ -641,7 +644,30 @@ function generateIntelligentFallback(
     message.includes("tech") ||
     message.includes("experience")
   ) {
-    return "Mohamed is a full-stack developer with 1+ years of experience. His technical stack includes React, Next.js, Node.js, TypeScript, and AWS. He specializes in building scalable web applications and has experience with both frontend and backend development and AI technologies. What specific technology would you like to know more about?";
+    return "Mohamed is a full-stack developer with 1+ years of experience. His technical stack includes React, Next.js, Node.js, TypeScript, Python, and AWS. He specializes in building scalable web applications and has experience with both frontend and backend development. What specific technology would you like to know more about?";
+  }
+
+  // Experience and background inquiries
+  if (
+    message.includes("background") ||
+    message.includes("story") ||
+    message.includes("journey") ||
+    message.includes("career") ||
+    message.includes("about you") ||
+    message.includes("tell me about")
+  ) {
+    return "Mohamed is a passionate full-stack developer from Lisbon, Portugal, with 1+ years of professional experience building modern web applications. 🚀\n\n📍 **Background:**\n• Currently focused on React, Next.js, and Node.js development\n• Experience with both frontend and backend technologies\n• Built several production applications including job platforms and social media apps\n\n💼 **Current Focus:**\n• Full-stack development with modern JavaScript/TypeScript\n• Building scalable web applications\n• Working with databases like MongoDB and PostgreSQL\n\nWhat specific aspect of his background would you like to explore?";
+  }
+
+  // Achievement and accomplishment inquiries
+  if (
+    message.includes("achievement") ||
+    message.includes("accomplishment") ||
+    message.includes("proud") ||
+    message.includes("success") ||
+    message.includes("proud of")
+  ) {
+    return "Mohamed has several impressive achievements in his development journey! 🏆\n\n⭐ **Key Accomplishments:**\n\n**NilToum Connect** - His flagship project:\n• Built a comprehensive job matching platform\n• Implemented microservices architecture\n• Created mobile-first, low-bandwidth optimized UI\n• Used modern tech stack: Next.js, NestJS, MongoDB\n\n**Technical Growth:**\n• Mastered full-stack development in 1+ years\n• Built multiple production applications\n• Developed expertise in React, Node.js, and TypeScript\n\n**Current Projects:**\n• AI-powered portfolio with contextual chat assistant\n• Modern social media platform (MonDo)\n\nWhich project would you like to hear more about?";
   }
 
   // Hiring/Employment inquiries
@@ -657,10 +683,21 @@ function generateIntelligentFallback(
     return "Great question! Mohamed is actively open to new opportunities and collaborations. 🚀\n\n✅ **Available for:**\n• Full-time positions\n• Freelance projects\n• Contract work\n• Remote opportunities\n\n📧 **Get in touch:**\nEmail: aldgar1988@protonmail.com\nWhatsApp: +351 914 14 33 40\nLocation: Lisbon, Portugal\n\nHe's experienced in React, Next.js, Node.js, TypeScript, and modern web development. Feel free to reach out to discuss your project requirements!";
   }
 
-  // Default contextual response
-  if (conversationHistory.length > 0) {
-    return `I understand you're asking about "${userMessage}". While I'm temporarily unable to provide my full AI capabilities, I can still help you learn about Mohamed's professional background. Please feel free to contact him directly at aldgar1988@protonmail.com for detailed discussions!`;
+  // Challenges and problem-solving inquiries
+  if (
+    message.includes("challenge") ||
+    message.includes("difficulty") ||
+    message.includes("problem") ||
+    message.includes("overcome") ||
+    message.includes("struggle")
+  ) {
+    return "Great question about Mohamed's problem-solving experience! 💪\n\n🔧 **Key Challenges He's Tackled:**\n\n**NilToum Connect:**\n• Building for underserved regions with slow networks\n• Implementing microservices architecture for scalability\n• Balancing performance with time-to-market constraints\n\n**Technical Challenges:**\n• Real-time features implementation\n• Database optimization and caching strategies\n• Secure authentication systems\n• Cross-browser compatibility\n\nMohamed approaches challenges systematically, researching solutions, testing alternatives, and implementing robust fixes. Would you like details about any specific technical challenge?";
   }
 
-  return "Hello! I'm Mohamed's AI assistant. While I'm temporarily experiencing some technical issues, I can still help you learn about his work. Mohamed is a full-stack developer specializing in React, Next.js, and modern web technologies. For detailed conversations, please reach out to him at aldgar1988@protonmail.com!";
+  // Default intelligent response
+  if (conversationHistory.length > 0) {
+    return `That's an interesting question about "${userMessage}"! Mohamed has extensive experience in full-stack development, working with React, Next.js, Node.js, and modern web technologies. His projects include job platforms, social media applications, and management dashboards. Would you like me to elaborate on any specific aspect of his work or experience?`;
+  }
+
+  return "Hello! I'm Mohamed's AI assistant with comprehensive knowledge about his professional background. Mohamed is a skilled full-stack developer specializing in React, Next.js, and modern web technologies, with several impressive projects in his portfolio. What would you like to know about his work or experience?";
 }
