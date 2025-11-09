@@ -1,13 +1,15 @@
 import QRCode from "react-qr-code";
 
 export default function QRCodeContactPage() {
+  const landingPageURL = "https://aldgar.dev/qr-landing"; // Replace with your hosted URL
+
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100 dark:bg-gray-900">
       <h1 className="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-200">
         Mohamed Ibrahim
       </h1>
       <QRCode
-        value="https://aldgar.dev"
+        value={landingPageURL}
         size={256}
         bgColor="#ffffff"
         fgColor="#000000"
