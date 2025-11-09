@@ -17,7 +17,7 @@ export default function QRLandingPage() {
     // Redirect to portfolio after a delay
     const redirectTimeout = setTimeout(() => {
       window.location.href = "https://aldgar.dev"; // Replace with your portfolio URL
-    }, 3000); // 3-second delay before redirect
+    }, 5000); // Increased delay to 5 seconds for better UI experience
 
     return () => clearTimeout(redirectTimeout);
   }, []);
