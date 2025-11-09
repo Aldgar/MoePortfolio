@@ -128,27 +128,17 @@ export default function SmartPortfolioAdapter({
   };
 
   const smartScrollToSection = (sectionId: string): boolean => {
-    console.log(
-      `🎯 AI Banner: Attempting to scroll to section: "${sectionId}"`
-    );
+    console.log(`🎯 AI Banner: Attempting to scroll to section: "${sectionId}"`);
 
     const element = document.getElementById(sectionId);
 
     if (element) {
       console.log(`✅ AI Banner: Found section "${sectionId}"`);
 
-      // Get the element's position
-      const elementRect = element.getBoundingClientRect();
-      const absoluteElementTop = elementRect.top + window.pageYOffset;
-      const middle =
-        absoluteElementTop - window.innerHeight / 2 + elementRect.height / 2;
-
-      console.log(`📍 AI Banner: Scrolling to position: ${middle}`);
-
-      // Scroll to the element
-      window.scrollTo({
-        top: middle,
+      // Use scrollIntoView for smoother scrolling and less manual calculation
+      element.scrollIntoView({
         behavior: "smooth",
+        block: "center",
       });
 
       // Add visual feedback with slight delay
@@ -171,13 +161,12 @@ export default function SmartPortfolioAdapter({
           element.style.borderRadius = "";
           element.style.transform = "";
         }, 3000);
-      }, 100); // Small delay to ensure DOM is ready
+      }, 300);
 
-      return true; // Successfully found section
+      return true;
     } else {
-      console.log(`❌ AI Banner: Section "${sectionId}" not found`);
-      showNotification(`❌ Section "${sectionId}" not found`, "error");
-      return false; // Section not found
+      console.warn(`❌ AI Banner: Section "${sectionId}" not found.`);
+      return false;
     }
   };
 
@@ -360,8 +349,6 @@ export default function SmartPortfolioAdapter({
         return "Welcome! 🤖";
     }
   };
-
-  // ...existing code...
 
   return (
     <>

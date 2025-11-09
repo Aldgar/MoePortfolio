@@ -7,6 +7,7 @@ import Navbar from "@/components/navbar";
 import SmartPortfolioAdapter from "@/components/SmartPortfolioAdapter";
 import Script from "next/script";
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,6 +24,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+
   useEffect(() => {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("/sw.js").then(
@@ -65,10 +68,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SmartPortfolioAdapter>
-            <Navbar />
-            {children}
-          </SmartPortfolioAdapter>
+          {pathname === "/" && (
+            <SmartPortfolioAdapter>
+              <></>
+            </SmartPortfolioAdapter>
+          )}
+          <Navbar />
+          {children}
         </ThemeProvider>
       </body>
     </html>

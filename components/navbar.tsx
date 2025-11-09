@@ -14,6 +14,7 @@ import { usePathname } from "next/navigation";
 function Navbar() {
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -26,21 +27,30 @@ function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY < 10) {
-        setShow(true);
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+
+      scrollTimeout.current = setTimeout(() => {
+        if (window.scrollY < 10) {
+          setShow(true);
+        } else if (window.scrollY > lastScrollY) {
+          setShow(false); // scrolling down
+        } else {
+          setShow(true); // scrolling up
+        }
         setLastScrollY(window.scrollY);
-        return;
-      }
-      if (window.scrollY > lastScrollY) {
-        setShow(false); // scrolling down
-      } else {
-        setShow(true); // scrolling up
-      }
-      setLastScrollY(window.scrollY);
+      }, 100); // Debounce delay of 100ms
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+    };
   }, [lastScrollY]);
 
   // Close mobile menu on route change or resize
@@ -113,14 +123,7 @@ function Navbar() {
                 QR Code
               </NavigationMenuLink>
             </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink
-                href="/contact-card"
-                className={navigationMenuTriggerStyle()}
-              >
-                Contact Card
-              </NavigationMenuLink>
-            </NavigationMenuItem>
+            <NavigationMenuItem></NavigationMenuItem>
           </>
         ) : (
           <>
@@ -180,14 +183,6 @@ function Navbar() {
                 QR Code
               </NavigationMenuLink>
             </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink
-                href="/contact-card"
-                className={navigationMenuTriggerStyle()}
-              >
-                Contact Card
-              </NavigationMenuLink>
-            </NavigationMenuItem>
           </>
         )}
         <NavigationMenuItem>
@@ -230,81 +225,76 @@ function Navbar() {
               Home
             </NavigationMenuLink>
           </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              href="#about"
-              className={navigationMenuTriggerStyle()}
-              onClick={() => setMobileOpen(false)}
-            >
-              About
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              href="#skills"
-              className={navigationMenuTriggerStyle()}
-              onClick={() => setMobileOpen(false)}
-            >
-              Skills
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              href="#projects"
-              className={navigationMenuTriggerStyle()}
-              onClick={() => setMobileOpen(false)}
-            >
-              Projects
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              href="#experience"
-              className={navigationMenuTriggerStyle()}
-              onClick={() => setMobileOpen(false)}
-            >
-              Experience
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              href="#contact"
-              className={navigationMenuTriggerStyle()}
-              onClick={() => setMobileOpen(false)}
-            >
-              Contact
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              href="#downloadCv"
-              className={navigationMenuTriggerStyle()}
-              onClick={() => setMobileOpen(false)}
-            >
-              Download CV
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              href="/qr-code"
-              className={navigationMenuTriggerStyle()}
-              onClick={() => setMobileOpen(false)}
-            >
-              QR Code
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              href="/contact-card"
-              className={navigationMenuTriggerStyle()}
-              onClick={() => setMobileOpen(false)}
-            >
-              Contact Card
-            </NavigationMenuLink>
-          </NavigationMenuItem>
+          {!isSpecialPage && (
+            <>
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  href="#about"
+                  className={navigationMenuTriggerStyle()}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  About
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  href="#skills"
+                  className={navigationMenuTriggerStyle()}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Skills
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  href="#projects"
+                  className={navigationMenuTriggerStyle()}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Projects
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  href="#experience"
+                  className={navigationMenuTriggerStyle()}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Experience
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  href="#contact"
+                  className={navigationMenuTriggerStyle()}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Contact
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  href="#downloadCv"
+                  className={navigationMenuTriggerStyle()}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Download CV
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  href="/qr-code"
+                  className={navigationMenuTriggerStyle()}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  QR Code
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            </>
+          )}
 
           {/* Admin Panel Button for Mobile */}
-          {pathname !== "/admin" && (
+          {!isSpecialPage && pathname !== "/admin" && (
             <NavigationMenuItem>
               <div className="relative group">
                 <Link

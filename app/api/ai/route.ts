@@ -192,6 +192,17 @@ const MOHAMED_DATA = {
 };
 
 export async function POST(request: NextRequest) {
+  const url = new URL(request.url);
+  const pathname = url.pathname;
+
+  // Restrict AI assistant to home page
+  if (pathname !== "/") {
+    return NextResponse.json({
+      response: "AI assistant is only available on the home page.",
+      responseType: "INFO",
+    });
+  }
+
   let message = "";
   let conversationHistory: Array<{ role: string; content: string }> = [];
   let responseType = "GENERAL";
