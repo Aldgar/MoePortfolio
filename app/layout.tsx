@@ -1,10 +1,12 @@
-import type { Metadata } from "next";
+"use client";
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import Navbar from "@/components/navbar";
 import SmartPortfolioAdapter from "@/components/SmartPortfolioAdapter";
 import Script from "next/script";
+import { useEffect } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,16 +18,20 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Mohamed Ibrahim - AI-Powered Portfolio",
-  description: "Full Stack Developer with AI-Enhanced Portfolio Experience",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").then(
+        () => console.log("Service Worker registered successfully."),
+        (error) => console.error("Service Worker registration failed:", error)
+      );
+    }
+  }, []);
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -38,6 +44,8 @@ export default function RootLayout({
             })(window,document,'script','dataLayer','GTM-WL3C9RRC');
           `}
         </Script>
+        <link rel="manifest" href="/manifest.webmanifest" />
+        <meta name="theme-color" content="#000000" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
