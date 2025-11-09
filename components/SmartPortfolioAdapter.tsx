@@ -128,7 +128,9 @@ export default function SmartPortfolioAdapter({
   };
 
   const smartScrollToSection = (sectionId: string): boolean => {
-    console.log(`🎯 AI Banner: Attempting to scroll to section: "${sectionId}"`);
+    console.log(
+      `🎯 AI Banner: Attempting to scroll to section: "${sectionId}"`
+    );
 
     const element = document.getElementById(sectionId);
 
